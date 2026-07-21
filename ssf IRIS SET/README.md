@@ -19,10 +19,10 @@ app/
 pip install -r requirements.txt
 
 # 1) Jalankan ETL sekali untuk membentuk clean_data/*.parquet
-python etl.py
+py etl.py
 
 # 2) Jalankan dashboard
-streamlit run app.py
+py -m streamlit run app.py --server.port 8502
 ```
 Dashboard akan terbuka di `http://localhost:8501`.
 
