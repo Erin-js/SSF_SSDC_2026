@@ -70,10 +70,24 @@ ICON_PATHS = {
     "favicon": "assets/logo.png",
     "chat": "assets/chat2.png",
 
-    # Navigation
+    # Page navigation shown in Dashboard Settings
     "nav_executive": "assets/nav/nav_executive.png",
     "nav_matching": "assets/nav/nav_matching.png",
     "nav_operations": "assets/nav/nav_operations.png",
+
+    # Section navigation and section headings
+    # Replace these files with your own PNG/SVG icons.
+    "section_executive_overview": "assets/sections/executive_overview.png",
+    "section_executive_flow": "assets/sections/executive_flow.png",
+    "section_executive_placement": "assets/sections/executive_placement.png",
+    "section_executive_partners": "assets/sections/executive_partners.png",
+    "section_executive_insights": "assets/sections/executive_insights.png",
+    "section_matching_setup": "assets/sections/matching_setup.png",
+    "section_matching_results": "assets/sections/matching_results.png",
+    "section_operations_pipeline": "assets/sections/operations_pipeline.png",
+    "section_operations_delays": "assets/sections/operations_delays.png",
+    "section_operations_followup": "assets/sections/operations_followup.png",
+    "section_operations_outcomes": "assets/sections/operations_outcomes.png",
 
     # KPI cards
     "student": "assets/cards/student.svg",
@@ -253,7 +267,7 @@ st.set_page_config(
     page_title=f"{DASHBOARD_TITLE} | SSDC 2026",
     page_icon=str(favicon_file) if favicon_file else None,
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
 )
 
 
@@ -288,9 +302,8 @@ html, body, [data-testid="stAppViewContainer"] {{
 }}
 
 [data-testid="stAppViewBlockContainer"] {{
-  max-width: 1500px;
-  padding-top: 1.15rem;
-  padding-bottom: 5rem;
+  max-width: 1600px;
+  padding: .65rem 1.1rem 1rem;
 }}
 
 [data-testid="stHeader"] {{ background: transparent; }}
@@ -308,30 +321,30 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
    Logo is deliberately transparent and is not placed inside a small box. */
 .hop-topbar {{
   display:flex; align-items:center; justify-content:space-between;
-  gap:28px; flex-wrap:wrap; padding:22px 30px;
-  min-height:132px; margin:2px 0 18px;
+  gap:22px; flex-wrap:wrap; padding:14px 24px;
+  min-height:102px; margin:2px 0 10px;
   background:linear-gradient(135deg,#FFFFFF 0%,#F7FCFB 100%);
   border:1px solid var(--border-light); border-radius:24px;
   box-shadow:0 18px 42px rgba(28,94,88,.13);
 }}
 .hop-brand {{ display:flex; align-items:center; gap:25px; min-width:0; }}
 .hop-mark {{
-  width:155px; height:96px; flex:0 0 155px;
+  width:130px; height:76px; flex:0 0 130px;
   background:transparent; border:0; border-radius:0;
   display:flex; align-items:center; justify-content:center;
   box-shadow:none; overflow:visible;
 }}
 .brand-logo {{
-  width:150px; height:92px; max-width:100%;
+  width:126px; height:72px; max-width:100%;
   object-fit:contain; display:block; background:transparent;
 }}
 .hop-title {{
-  font-family:{FONT_DISPLAY}; font-size:40px; font-weight:700;
+  font-family:{FONT_DISPLAY}; font-size:34px; font-weight:700;
   line-height:1.05; letter-spacing:-.65px; color:var(--text-hi);
 }}
 .hop-sub {{
-  color:var(--teal-dark); font-size:14px; line-height:1.45;
-  margin-top:8px; font-weight:520; max-width:780px;
+  color:var(--teal-dark); font-size:12.5px; line-height:1.4;
+  margin-top:5px; font-weight:520; max-width:780px;
 }}
 .hop-asof {{
   display:flex; gap:9px; align-items:center; padding:10px 16px;
@@ -369,7 +382,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
 /* Custom navigation with replaceable PNG/SVG icons */
 .hop-nav-shell {{
   display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
-  padding:8px; background:rgba(255,255,255,.88);
+  padding:8px; background:#FFFFFF;
   border:1px solid var(--border-light); border-radius:18px;
   box-shadow:0 12px 30px rgba(28,94,88,.10); margin-bottom:8px;
 }}
@@ -401,7 +414,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
 }}
 
 /* Section headings */
-.section-row {{ display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:30px 0 13px; }}
+.section-row {{ display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:15px 0 8px; }}
 .section-title {{ font-family:{FONT_DISPLAY}; font-size:17px; font-weight:700; color:var(--text-hi); }}
 .section-desc {{ color:var(--teal-dark); font-size:12.5px; font-weight:520; line-height:1.55; max-width:760px; margin-top:4px; }}
 .section-tag {{
@@ -415,21 +428,21 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   position:relative; overflow:hidden;
   background:linear-gradient(180deg,#FFFFFF 0%,#FBFEFD 100%);
   border:1px solid var(--border-light); border-radius:18px;
-  padding:20px 21px; box-shadow:var(--shadow);
+  padding:15px 17px; box-shadow:var(--shadow);
 }}
 .hop-card::before, .kpi-card::before, .insight-card::before {{
   content:''; position:absolute; left:0; right:0; top:0; height:3px;
   background:linear-gradient(90deg,var(--teal),var(--mint)); opacity:.75;
 }}
 .kpi-label {{ color:var(--teal-dark); font-size:11px; font-weight:700; letter-spacing:.55px; text-transform:uppercase; }}
-.kpi-value {{ color:var(--text-hi); font-family:{FONT_MONO}; font-size:30px; font-weight:650; margin-top:10px; }}
-.kpi-foot {{ color:var(--teal-dark); font-size:11.5px; margin-top:8px; line-height:1.45; }}
+.kpi-value {{ color:var(--text-hi); font-family:{FONT_MONO}; font-size:27px; font-weight:650; margin-top:7px; }}
+.kpi-foot {{ color:var(--teal-dark); font-size:11px; margin-top:6px; line-height:1.35; }}
 .kpi-icon {{
-  position:absolute; top:16px; right:17px; width:60px; height:60px;
+  position:absolute; top:13px; right:14px; width:52px; height:52px;
   border-radius:16px; background:#E7F7F3; border:1px solid #D0ECE7;
   display:flex; align-items:center; justify-content:center;
 }}
-.kpi-icon .ui-icon {{ width:36px; height:36px; }}
+.kpi-icon .ui-icon {{ width:32px; height:32px; }}
 .card-title {{ font-family:{FONT_DISPLAY}; font-size:14px; font-weight:700; color:var(--text-hi); }}
 .card-sub {{ color:var(--teal-dark); font-size:11.7px; margin-top:5px; line-height:1.5; }}
 .kpi-value-text {{
@@ -481,8 +494,8 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
 
 /* Plotly containers act as clean white chart cards */
 div[data-testid="stPlotlyChart"] {{
-  background:#FFFFFF; border:1.35px solid #A9D5CF;
-  border-radius:20px; padding:10px 11px; box-shadow:var(--shadow);
+  background:#FFFFFF; border:1.25px solid #A9D5CF;
+  border-radius:18px; padding:5px 7px; box-shadow:var(--shadow);
   transition:transform .18s ease, box-shadow .18s ease;
 }}
 div[data-testid="stPlotlyChart"]:hover {{
@@ -592,10 +605,116 @@ small {{
 
 /* Footer */
 .hop-footer {{
-  margin-top:52px; padding:19px 20px;
-  background:rgba(255,255,255,.75); border:1px solid var(--border-light);
+  margin-top:14px; padding:9px 14px;
+  background:#FFFFFF; border:1px solid var(--border-light);
   border-radius:14px; color:var(--teal-dark); font-size:11px; text-align:center;
 }}
+
+/* Wide section navigation cards with replaceable icons */
+.section-nav-shell {{
+  --section-count:4;
+  display:grid;
+  grid-template-columns:repeat(var(--section-count),minmax(0,1fr));
+  gap:9px; padding:7px; margin:2px 0 10px;
+  background:#FFFFFF;
+  border:1px solid var(--border-light); border-radius:17px;
+  box-shadow:0 10px 25px rgba(28,94,88,.10);
+}}
+.section-nav-link {{
+  min-height:58px; display:flex; align-items:center; gap:11px;
+  padding:8px 12px; border:1px solid transparent; border-radius:12px;
+  color:var(--text-hi) !important; text-decoration:none !important;
+  font-size:12px; font-weight:700; line-height:1.25;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}}
+.section-nav-link:hover {{
+  background:#F4FBF9; border-color:var(--border-light);
+  transform:translateY(-1px); box-shadow:0 8px 18px rgba(28,94,88,.10);
+}}
+.section-nav-link.active {{
+  color:#FFFFFF !important;
+  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+  box-shadow:0 10px 23px rgba(20,156,148,.24);
+}}
+.section-nav-icon-box {{
+  width:42px; height:42px; flex:0 0 42px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:11px; background:#ECF8F5; border:1px solid #D2ECE7;
+}}
+.section-nav-link.active .section-nav-icon-box {{
+  background:#FFFFFF; border-color:rgba(255,255,255,.78);
+}}
+.section-nav-icon {{
+  width:28px; height:28px; object-fit:contain; display:block;
+}}
+@media(max-width:980px) {{
+  .section-nav-shell {{ grid-template-columns:repeat(2,minmax(0,1fr)); }}
+}}
+
+/* Section heading with a dedicated icon area */
+.section-heading-main {{
+  display:flex; align-items:center; gap:12px; min-width:0;
+}}
+.section-heading-icon {{
+  width:48px; height:48px; flex:0 0 48px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:13px; background:linear-gradient(145deg,#EFF8FF,#FFFFFF);
+  border:1px solid #D7E6F4; box-shadow:0 8px 19px rgba(82,112,148,.13);
+}}
+.section-heading-icon-img {{
+  width:31px; height:31px; object-fit:contain; display:block;
+}}
+
+/* Wide page navigation cards inside Dashboard Settings */
+.sidebar-page-nav {{
+  display:flex; flex-direction:column; gap:8px; margin:6px 0 15px;
+}}
+.sidebar-page-link {{
+  width:100%; min-height:58px; box-sizing:border-box;
+  display:flex; align-items:center; gap:11px;
+  padding:9px 10px; border-radius:12px;
+  background:#FFFFFF; border:1px solid var(--border-light);
+  color:var(--text-hi) !important; text-decoration:none !important;
+  font-size:12px; font-weight:700; line-height:1.3;
+  box-shadow:0 6px 16px rgba(28,94,88,.07);
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}}
+.sidebar-page-link:hover {{
+  transform:translateY(-1px); background:#FFFFFF;
+  border-color:var(--border-strong); box-shadow:0 9px 20px rgba(28,94,88,.11);
+}}
+.sidebar-page-link.active {{
+  color:#FFFFFF !important;
+  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+  border-color:transparent; box-shadow:0 10px 24px rgba(20,156,148,.24);
+}}
+.sidebar-page-icon-box {{
+  width:40px; height:40px; flex:0 0 40px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:10px; background:#ECF8F5; border:1px solid #D2ECE7;
+}}
+.sidebar-page-link.active .sidebar-page-icon-box {{
+  background:#FFFFFF; border-color:rgba(255,255,255,.76);
+}}
+.sidebar-page-icon {{
+  width:27px; height:27px; object-fit:contain; display:block;
+}}
+/* Compact 1920 x 1080 presentation canvas */
+@media (min-width:1500px) and (min-height:850px) {{
+  [data-testid="stSidebar"] {{ min-width:285px; max-width:285px; }}
+  .section-title {{ font-size:16px; }}
+  .section-desc {{ font-size:11.5px; line-height:1.35; }}
+  .section-tag {{ font-size:9px; padding:4px 7px; }}
+  .kpi-card {{ min-height:108px; }}
+  [data-testid="stDataFrame"] {{ font-size:11px; }}
+  [data-testid="stForm"] {{ padding:14px 16px; }}
+  .panel-heading {{ margin-bottom:10px; }}
+  .panel-icon-box {{ width:48px; height:48px; flex-basis:48px; border-radius:14px; }}
+  .panel-icon-img {{ width:31px; height:31px; }}
+  .panel-heading-title {{ font-size:17px; }}
+  .panel-heading-sub {{ font-size:10.5px; }}
+}}
+
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -691,6 +810,80 @@ def format_pct(value: float) -> str:
     return f"{value:.1f}%"
 
 
+STAGE_LABELS = {
+    "Selecting Student by Company": "Pemilihan oleh perusahaan",
+    "CDC Briefing Student": "Pembekalan CDC",
+    "Study Case": "Studi kasus",
+    "Interview User": "Wawancara pengguna",
+    "Final Interview": "Wawancara akhir",
+    "Placement": "Ditempatkan",
+    "Rejected": "Ditolak",
+    "Ghosting": "Tanpa kabar",
+    "FU 1": "Tindak lanjut 1",
+    "FU 2": "Tindak lanjut 2",
+    "FU 3": "Tindak lanjut 3",
+}
+
+OUTCOME_LABELS = {
+    "Placement": "Ditempatkan",
+    "Ghosting": "Tanpa kabar",
+    "Rejection Interview User": "Ditolak setelah wawancara pengguna",
+    "Rejection Screening CV": "Ditolak saat seleksi CV",
+    "Rejection Study Case": "Ditolak setelah studi kasus",
+    "Rejection Final Interview": "Ditolak setelah wawancara akhir",
+}
+
+ACTIVE_STAGES = [
+    "Selecting Student by Company",
+    "CDC Briefing Student",
+    "Study Case",
+    "Interview User",
+    "Final Interview",
+    "FU 1",
+    "FU 2",
+    "FU 3",
+]
+
+
+def stage_label(value: object) -> str:
+    return STAGE_LABELS.get(str(value), str(value))
+
+
+def query_param_value(name: str, default: str) -> str:
+    """Read one query parameter safely across Streamlit versions."""
+    value = st.query_params.get(name, default)
+    if isinstance(value, list):
+        return str(value[-1]) if value else default
+    return str(value)
+
+
+def section_navigation(
+    page_key: str,
+    options: dict[str, tuple[str, str]],
+) -> str:
+    """Render wide, clickable section cards with replaceable PNG/SVG icons."""
+    keys = list(options)
+    current_section = query_param_value("section", keys[0])
+    if current_section not in options:
+        current_section = keys[0]
+
+    items = [
+        f'<div class="section-nav-shell" style="--section-count:{len(keys)};">'
+    ]
+    for key, (label, icon_key) in options.items():
+        active_class = " active" if key == current_section else ""
+        items.append(
+            f'<a class="section-nav-link{active_class}" '
+            f'href="?page={html.escape(page_key)}&section={html.escape(key)}" target="_self">'
+            f'<span class="section-nav-icon-box">'
+            f'{icon_html(icon_key, "section-nav-icon")}</span>'
+            f'<span>{html.escape(label)}</span></a>'
+        )
+    items.append("</div>")
+    st.markdown("".join(items), unsafe_allow_html=True)
+    return current_section
+
+
 def normalize_wa_number(value: object) -> str | None:
     """Normalize an Indonesian phone number into wa.me-compatible digits (62xxxxxxxxx)."""
     if value is None or (isinstance(value, float) and pd.isna(value)):
@@ -723,7 +916,7 @@ try:
 except FileNotFoundError as exc:
     st.error("Dashboard belum dapat membaca hasil ETL.")
     st.code(
-        "py etl.py\npy -m streamlit run app_revised_final.py",
+        "py etl.py\npy -m streamlit run app_revised_landscape_v2.py",
         language="bash",
     )
     st.caption(str(exc))
@@ -740,42 +933,81 @@ status_student = DATA["status_student"].copy()
 tracking_company = DATA["tracking_company"].copy()
 tracking_student = DATA["tracking_student"].copy()
 
-DEFAULT_AS_OF = max_valid_date(
-    tracking_student.get("last_update", pd.Series(dtype="datetime64[ns]")),
-    tracking_company.get("send_date", pd.Series(dtype="datetime64[ns]")),
-    status_student.get("sync_date", pd.Series(dtype="datetime64[ns]")),
-)
+# The response-age calculation should follow the newest active selection record.
+# Sync dates can be much newer than the actual recruitment history and would
+# otherwise make every process look hundreds of days late.
+_active_update_dates = pd.to_datetime(
+    tracking_student.loc[
+        tracking_student.get("progress_student", pd.Series("", index=tracking_student.index)).isin(ACTIVE_STAGES),
+        "last_update",
+    ],
+    errors="coerce",
+).dropna()
+
+if not _active_update_dates.empty:
+    DEFAULT_AS_OF = _active_update_dates.max().normalize()
+else:
+    DEFAULT_AS_OF = max_valid_date(
+        tracking_student.get("last_update", pd.Series(dtype="datetime64[ns]")),
+        tracking_company.get("send_date", pd.Series(dtype="datetime64[ns]")),
+        talent_request.get("request_date", pd.Series(dtype="datetime64[ns]")),
+    ).normalize()
+
 
 
 # =============================================================================
-# SIDEBAR SETTINGS
+# SIDEBAR SETTINGS AND PAGE NAVIGATION
 # =============================================================================
-# These settings are operational controls, not core visual elements.
+PAGE_OPTIONS = {
+    "executive": ("Ringkasan Penempatan", "nav_executive", "overview"),
+    "matching": ("Temukan Kandidat", "nav_matching", "setup"),
+    "operations": ("Pantau Proses Seleksi", "nav_operations", "pipeline"),
+}
+
+current_page_key = query_param_value("page", "executive")
+if current_page_key not in PAGE_OPTIONS:
+    current_page_key = "executive"
+
 with st.sidebar:
-    st.markdown("### Dashboard Settings")
-    st.caption("Versi aplikasi: KPI Final · tanpa kartu 0/0 lama")
+    st.markdown("### Pengaturan Dashboard")
+    st.caption("Pilih fokus dashboard")
+    page_nav_html = ['<div class="sidebar-page-nav">']
+    for page_key, (page_label, page_icon, default_section) in PAGE_OPTIONS.items():
+        active_class = " active" if page_key == current_page_key else ""
+        page_nav_html.append(
+            f'<a class="sidebar-page-link{active_class}" '
+            f'href="?page={html.escape(page_key)}&section={html.escape(default_section)}" target="_self">'
+            f'<span class="sidebar-page-icon-box">'
+            f'{icon_html(page_icon, "sidebar-page-icon")}</span>'
+            f'<span>{html.escape(page_label)}</span></a>'
+        )
+    page_nav_html.append("</div>")
+    st.markdown("".join(page_nav_html), unsafe_allow_html=True)
+
     as_of_date = st.date_input(
-        "Tanggal acuan analisis",
+        "Tanggal acuan",
         value=DEFAULT_AS_OF.date(),
-        help="Gunakan tanggal maksimum dataset agar metrik ghosting historis tetap relevan.",
+        help="Tanggal awal otomatis mengikuti pembaruan terbaru pada proses seleksi aktif.",
     )
     privacy_mode = st.selectbox(
-        "Mode tampilan data",
-        ["Publik / Lomba", "Internal CDC"],
-        help="Mode publik menyamarkan nama dan NIM mahasiswa.",
+        "Tampilan identitas",
+        ["Disamarkan untuk lomba", "Tampilkan untuk internal CDC"],
+        help="Mode lomba menyamarkan nama dan NIM mahasiswa.",
     )
     st.markdown("---")
-    st.caption("Warna, font, radius kartu, dan tata letak dapat diubah dari blok [DESIGN] dan [LAYOUT] di file Python.")
-    with st.expander("Status ikon dan aset"):
+    st.caption(
+        "Gunakan pilihan bagian di area utama untuk berpindah visual tanpa perlu menggulir halaman panjang."
+    )
+    with st.expander("Periksa ikon dan aset"):
         st.caption("Kode mencari PNG/SVG di assets/, assets/icons/, dan folder project.")
         for asset_key, configured_path in ICON_PATHS.items():
             resolved_path = resolve_asset_path(configured_path)
             status_text = "Terdeteksi" if resolved_path else "Belum ditemukan"
             shown_path = str(resolved_path.relative_to(BASE_DIR)) if resolved_path else configured_path
-            st.write(f"**{asset_key}** — {status_text}: `{shown_path}`")
+            st.write(f"**{asset_key}** · {status_text}: `{shown_path}`")
 
 AS_OF = pd.Timestamp(as_of_date)
-IS_PUBLIC = privacy_mode == "Publik / Lomba"
+IS_PUBLIC = privacy_mode == "Disamarkan untuk lomba"
 
 
 # =============================================================================
@@ -897,13 +1129,24 @@ def style_figure(fig: go.Figure, height: int | None = None) -> go.Figure:
     return fig
 
 
-def section_header(title: str, description: str, tag: str) -> None:
+def section_header(
+    title: str,
+    description: str,
+    tag: str,
+    icon_key: str,
+) -> None:
+    """Section heading with a named title and a replaceable icon area."""
     st.markdown(
         f"""
         <div class="section-row">
-          <div>
-            <div class="section-title">{html.escape(title)}</div>
-            <div class="section-desc">{html.escape(description)}</div>
+          <div class="section-heading-main">
+            <span class="section-heading-icon">
+              {icon_html(icon_key, "section-heading-icon-img")}
+            </span>
+            <div>
+              <div class="section-title">{html.escape(title)}</div>
+              <div class="section-desc">{html.escape(description)}</div>
+            </div>
           </div>
           <span class="section-tag">{html.escape(tag)}</span>
         </div>
@@ -1011,7 +1254,7 @@ def insight_card(
 
 
 # =============================================================================
-# HEADER AND NAVIGATION
+# HEADER
 # =============================================================================
 st.markdown(
     f"""
@@ -1028,42 +1271,24 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
-# [DESIGN 05] Custom navigation with user-replaceable icons.
-PAGE_OPTIONS = {
-    "executive": "1 Ringkasan Penempatan",
-    "matching": "2 Temukan Kandidat",
-    "operations": "3 Pantau Proses Seleksi",
-}
-current_page_key = st.query_params.get("page", "executive")
-if current_page_key not in PAGE_OPTIONS:
-    current_page_key = "executive"
-page = PAGE_OPTIONS[current_page_key]
-
-navigation_items = [
-    ("executive", "nav_executive", PAGE_OPTIONS["executive"]),
-    ("matching", "nav_matching", PAGE_OPTIONS["matching"]),
-    ("operations", "nav_operations", PAGE_OPTIONS["operations"]),
-]
-nav_html = ['<div class="hop-nav-shell">']
-for key, icon_key, label in navigation_items:
-    active_class = " active" if key == current_page_key else ""
-    nav_html.append(
-        f'<a class="hop-nav-item{active_class}" href="?page={key}" target="_self">'
-        f'<span class="nav-icon-box">{icon_html(icon_key, "nav-icon-img")}</span>'
-        f'<span>{html.escape(label)}</span></a>'
-    )
-nav_html.append('</div>')
-st.markdown("".join(nav_html), unsafe_allow_html=True)
-
-st.caption(f"Tim: **{TEAM_NAME}**  ·  Nomor peserta: **{PARTICIPANT_NUMBER}**")
+st.caption(f"Tim: **{TEAM_NAME}** · Nomor peserta: **{PARTICIPANT_NUMBER}**")
 
 
 # =============================================================================
-# PAGE 1: EXECUTIVE VIEW
-# Covers BT-04 and BT-07.
+# PAGE 1: RINGKASAN PENEMPATAN
+# Dibagi menjadi empat bagian agar setiap tampilan nyaman pada layar 1920 × 1080.
 # =============================================================================
 if current_page_key == "executive":
+    executive_section = section_navigation(
+        "executive",
+        {
+            "overview": ("Ringkasan Utama", "section_executive_overview"),
+            "placement": ("Penempatan Mahasiswa", "section_executive_placement"),
+            "partners": ("Mitra dan Wilayah", "section_executive_partners"),
+            "insights": ("Insight Penting", "section_executive_insights"),
+        },
+    )
+
     total_students = student_all["NIM"].astype(str).nunique()
     active_students = readiness.loc[readiness.get("status", "").eq("Active"), "NIM"].nunique()
     total_placed = len(placed_nims)
@@ -1075,31 +1300,18 @@ if current_page_key == "executive":
     valid_send["days_to_send"] = (valid_send["send_date"] - valid_send["request_date"]).dt.days
     avg_send_days = valid_send.loc[valid_send["days_to_send"] >= 0, "days_to_send"].mean()
 
-    # [LAYOUT 01] Change 4 columns to 2 or 3 columns to alter the KPI grid.
-    k1, k2, k3, k4 = st.columns(4, gap="medium")
-    with k1:
-        kpi_card("Mahasiswa Aktif", format_int(active_students), f"{format_int(total_students)} mahasiswa pada master data", "student")
-    with k2:
-        kpi_card("Mahasiswa Placed", format_int(total_placed), f"Placement rate {format_pct(placement_rate)}", "placement")
-    with k3:
-        kpi_card("Perusahaan Mitra", format_int(total_companies), f"{format_int(total_requests)} talent request tercatat", "company")
-    with k4:
-        send_text = f"{avg_send_days:.1f} hari" if pd.notna(avg_send_days) else "N/A"
-        kpi_card("Rata-rata Time to Send", send_text, "Dari request diterima sampai kandidat dikirim", "clock")
-
-    # -------------------------------------------------------------------------
-    # Sankey conversion flow
-    # -------------------------------------------------------------------------
-    section_header(
-        "Alur Konversi Talenta",
-        "Perjalanan mahasiswa dari master data, status aktif, ketersediaan, hingga sektor penempatan.",
-        "BT-04 · SANKEY",
+    status_dedup = (
+        status_student.sort_values("sync_date", na_position="first")
+        .drop_duplicates("NIM", keep="last")
     )
-
-    status_dedup = status_student.sort_values("sync_date", na_position="first").drop_duplicates("NIM", keep="last")
-    status_counts = status_dedup.get("status", pd.Series(dtype=str)).fillna("Belum diketahui").value_counts()
-
-    active_set = set(status_dedup.loc[status_dedup.get("status", "").eq("Active"), "NIM"].astype(str))
+    status_counts = (
+        status_dedup.get("status", pd.Series(dtype=str))
+        .fillna("Belum diketahui")
+        .value_counts()
+    )
+    active_set = set(
+        status_dedup.loc[status_dedup.get("status", "").eq("Active"), "NIM"].astype(str)
+    )
     placed_active_set = placed_nims.intersection(active_set)
     available_active_set = set(
         status_dedup.loc[
@@ -1110,231 +1322,47 @@ if current_page_key == "executive":
     ) - placed_active_set
     other_active_set = active_set - placed_active_set - available_active_set
 
-    placement_sector = placed_unique[placed_unique["NIM"].astype(str).isin(placed_active_set)].copy()
-    placement_sector["industry_sector"] = placement_sector.get("industry_sector", "Tidak diketahui").fillna("Tidak diketahui")
-    sector_counts = placement_sector.groupby("industry_sector")["NIM"].nunique().sort_values(ascending=False)
-    top_sectors = sector_counts.head(7)
-    remainder = max(len(placed_active_set) - int(top_sectors.sum()), 0)
-    if remainder:
-        top_sectors.loc["Sektor lainnya / belum terpetakan"] = remainder
-
-    labels = ["Semua Mahasiswa"]
-    sources: list[int] = []
-    targets: list[int] = []
-    values: list[int] = []
-    node_colors = [CHART_COLORS[0]]
-    link_colors: list[str] = []
-
-    def rgba(hex_color: str, alpha: float = 0.24) -> str:
-        clean = hex_color.lstrip("#")
-        red, green, blue = int(clean[0:2], 16), int(clean[2:4], 16), int(clean[4:6], 16)
-        return f"rgba({red},{green},{blue},{alpha})"
-
-    def add_link(source_label: str, target_label: str, value: int, color: str) -> None:
-        if value <= 0:
-            return
-        if source_label not in labels:
-            labels.append(source_label)
-            node_colors.append(CHART_COLORS[len(labels) % len(CHART_COLORS)])
-        if target_label not in labels:
-            labels.append(target_label)
-            node_colors.append(color)
-        sources.append(labels.index(source_label))
-        targets.append(labels.index(target_label))
-        values.append(int(value))
-        link_colors.append(rgba(color, 0.22))
-
-    known_status_total = 0
-    status_color = {"Active": CHART_COLORS[6], "Inactive": CHART_COLORS[8], "Cuti": CHART_COLORS[3], "Lulus": CHART_COLORS[1]}
-    for status_name, count in status_counts.items():
-        known_status_total += int(count)
-        add_link("Semua Mahasiswa", str(status_name), int(count), status_color.get(str(status_name), TEXT_LOW))
-    missing_status = max(total_students - known_status_total, 0)
-    add_link("Semua Mahasiswa", "Belum terhubung ke status", missing_status, TEXT_LOW)
-
-    add_link("Active", "Placed", len(placed_active_set), CHART_COLORS[0])
-    add_link("Active", "Available", len(available_active_set), CHART_COLORS[5])
-    add_link("Active", "Status aktif lainnya", len(other_active_set), CHART_COLORS[2])
-    for sector, count in top_sectors.items():
-        add_link("Placed", str(sector), int(count), CHART_COLORS[(len(labels) + int(count)) % len(CHART_COLORS)])
-
-    sankey = go.Figure(
-        go.Sankey(
-            arrangement="snap",
-            node={
-                "pad": 18,
-                "thickness": 18,
-                "line": {"color": "rgba(20,112,107,.18)", "width": 0.8},
-                "label": [f"<b>{label}</b>" for label in labels],
-                "color": node_colors,
-            },
-            link={
-                "source": sources,
-                "target": targets,
-                "value": values,
-                "color": link_colors,
-            },
-        )
-    )
-    style_figure(sankey, 480)
-    sankey.update_layout(
-        font={"family": "Encode Sans", "size": 12, "color": TEXT_HIGH},
-        title_text="",
-    )
-    st.plotly_chart(
-        sankey,
-        use_container_width=True,
-        config=PLOTLY_CONFIG,
-        key="sankey_chart",
+    placement_sector = placed_unique[
+        placed_unique["NIM"].astype(str).isin(placed_active_set)
+    ].copy()
+    placement_sector["industry_sector"] = placement_sector.get(
+        "industry_sector", "Tidak diketahui"
+    ).fillna("Tidak diketahui")
+    sector_counts = (
+        placement_sector.groupby("industry_sector")["NIM"]
+        .nunique()
+        .sort_values(ascending=False)
     )
 
-    # -------------------------------------------------------------------------
-    # [LAYOUT 02] Change [1.25, 0.85] to adjust the width of the two panels.
-    # -------------------------------------------------------------------------
-    left, right = st.columns([1.25, 0.85], gap="large")
-
-    with left:
-        section_header(
-            "Penyerapan per Program Studi",
-            "Jumlah mahasiswa placed dan placement rate berdasarkan program studi.",
-            "BT-07 · TOP 15",
+    prodi_summary = (
+        readiness.groupby("program_studi", dropna=False)
+        .agg(
+            total_students=("NIM", "nunique"),
+            placed_students=("is_placed", "sum"),
         )
-        prodi_summary = (
-            readiness.groupby("program_studi", dropna=False)
-            .agg(
-                total_students=("NIM", "nunique"),
-                placed_students=("is_placed", "sum"),
-            )
-            .reset_index()
-        )
-        prodi_summary["placement_rate"] = (
-            prodi_summary["placed_students"] / prodi_summary["total_students"] * 100
-        ).fillna(0)
-        prodi_summary = prodi_summary.sort_values("placed_students", ascending=False).head(15).sort_values("placed_students")
-        fig_prodi = px.bar(
-            prodi_summary,
-            x="placed_students",
-            y="program_studi",
-            orientation="h",
-            text="placed_students",
-            custom_data=["placement_rate", "total_students"],
-        )
-        fig_prodi.update_traces(
-            marker_color=[CHART_COLORS[i % len(CHART_COLORS)] for i in range(len(prodi_summary))],
-            textposition="outside",
-            hovertemplate=(
-                "<b>%{y}</b><br>Placed: %{x:,.0f}<br>Total: %{customdata[1]:,.0f}"
-                "<br>Placement rate: %{customdata[0]:.1f}%<extra></extra>"
-            ),
-        )
-        style_figure(fig_prodi, 520)
-        fig_prodi.update_layout(xaxis_title="Mahasiswa Placed", yaxis_title=None)
-        st.plotly_chart(fig_prodi, use_container_width=True, config=PLOTLY_CONFIG)
-
-    with right:
-        section_header(
-            "Sinkronisasi Domisili dan Lokasi Kerja",
-            "Perbandingan penempatan pada kota yang sama dengan penempatan lintas kota.",
-            "BT-04 · MOBILITY",
-        )
-        relocation = placed_unique.merge(
-            readiness[["NIM", "domisili"]].drop_duplicates("NIM"),
-            on="NIM",
-            how="left",
-        )
-        relocation = relocation.dropna(subset=["domisili", "kota"])
-        relocation["same_city"] = (
-            relocation["domisili"].astype(str).str.strip().str.lower()
-            == relocation["kota"].astype(str).str.strip().str.lower()
-        )
-        same_city = int(relocation["same_city"].sum())
-        relocate = int((~relocation["same_city"]).sum())
-        donut_data = pd.DataFrame(
-            {"Kategori": ["Kota sama", "Relokasi"], "Jumlah": [same_city, relocate]}
-        )
-        fig_donut = px.pie(
-            donut_data,
-            names="Kategori",
-            values="Jumlah",
-            hole=0.64,
-            color="Kategori",
-            color_discrete_map={"Kota sama": CHART_COLORS[5], "Relokasi": CHART_COLORS[1]},
-        )
-        fig_donut.update_traces(textinfo="percent+label", hovertemplate="%{label}: %{value:,.0f}<extra></extra>")
-        style_figure(fig_donut, 300)
-        fig_donut.update_layout(showlegend=False)
-        st.plotly_chart(fig_donut, use_container_width=True, config=PLOTLY_CONFIG)
-
-        st.markdown('<div class="card-title">Top Sektor Penempatan</div>', unsafe_allow_html=True)
-        sector_show = sector_counts.head(6).rename_axis("Sektor").reset_index(name="Placement")
-        fig_sector = px.bar(sector_show.sort_values("Placement"), x="Placement", y="Sektor", orientation="h")
-        fig_sector.update_traces(marker_color=[CHART_COLORS[(i + 2) % len(CHART_COLORS)] for i in range(len(sector_show))], hovertemplate="%{y}: %{x:,.0f}<extra></extra>")
-        style_figure(fig_sector, 300)
-        fig_sector.update_layout(xaxis_title=None, yaxis_title=None)
-        st.plotly_chart(fig_sector, use_container_width=True, config=PLOTLY_CONFIG)
-
-    # -------------------------------------------------------------------------
-    # Geographic company distribution
-    # -------------------------------------------------------------------------
-    section_header(
-        "Peta Sebaran Perusahaan Mitra",
-        "Ukuran titik menunjukkan jumlah perusahaan terdaftar pada setiap kota yang dapat dipetakan.",
-        "GEO",
+        .reset_index()
     )
+    prodi_summary["placement_rate"] = (
+        prodi_summary["placed_students"] / prodi_summary["total_students"] * 100
+    ).fillna(0)
 
-    # Add or edit coordinates here when the dataset contains new cities.
-    CITY_COORDINATES = {
-        "Jakarta": (-6.2088, 106.8456),
-        "Surakarta": (-7.5755, 110.8243),
-        "Yogyakarta": (-7.7956, 110.3695),
-        "Semarang": (-6.9667, 110.4167),
-        "Bandung": (-6.9175, 107.6191),
-        "Surabaya": (-7.2575, 112.7521),
-        "Malang": (-7.9666, 112.6326),
-        "Bekasi": (-6.2383, 106.9756),
-        "Tangerang": (-6.1783, 106.6319),
-        "Depok": (-6.4025, 106.7942),
-        "Bogor": (-6.5950, 106.8166),
-        "Karanganyar": (-7.5961, 110.9508),
-        "Klaten": (-7.7058, 110.6067),
-        "Boyolali": (-7.5331, 110.5958),
-        "Magelang": (-7.4797, 110.2177),
-    }
-    city_counts = company.get("kota", pd.Series(dtype=str)).value_counts().rename_axis("kota").reset_index(name="jumlah_perusahaan")
-    city_counts["lat"] = city_counts["kota"].map(lambda x: CITY_COORDINATES.get(str(x), (np.nan, np.nan))[0])
-    city_counts["lon"] = city_counts["kota"].map(lambda x: CITY_COORDINATES.get(str(x), (np.nan, np.nan))[1])
-    geo_data = city_counts.dropna(subset=["lat", "lon"])
-
-    if not geo_data.empty:
-        map_fig = px.scatter_mapbox(
-            geo_data,
-            lat="lat",
-            lon="lon",
-            size="jumlah_perusahaan",
-            color="jumlah_perusahaan",
-            hover_name="kota",
-            hover_data={"lat": False, "lon": False, "jumlah_perusahaan": ":,.0f"},
-            color_continuous_scale=[[0, CHART_COLORS[5]], [0.5, CHART_COLORS[1]], [1, CHART_COLORS[2]]],
-            size_max=42,
-            zoom=4.3,
-            center={"lat": -7.2, "lon": 110.5},
-        )
-        map_fig.update_layout(mapbox_style="carto-positron", coloraxis_showscale=False)
-        style_figure(map_fig, 430)
-        st.plotly_chart(map_fig, use_container_width=True, config=PLOTLY_CONFIG)
-    else:
-        st.info("Tidak ada kota yang cocok dengan kamus koordinat pada bagian CITY_COORDINATES.")
-
-    # -------------------------------------------------------------------------
-    # Partner success table
-    # -------------------------------------------------------------------------
-    section_header(
-        "Mitra dengan Tingkat Keberhasilan Tertinggi",
-        "Success rate dihitung dari proses kandidat yang berakhir Placement. Minimum lima kandidat dikirim.",
-        "BT-04 · PARTNER",
+    relocation = placed_unique.merge(
+        readiness[["NIM", "domisili"]].drop_duplicates("NIM"),
+        on="NIM",
+        how="left",
+    ).dropna(subset=["domisili", "kota"])
+    relocation["same_city"] = (
+        relocation["domisili"].astype(str).str.strip().str.lower()
+        == relocation["kota"].astype(str).str.strip().str.lower()
     )
+    same_city = int(relocation["same_city"].sum())
+    relocate = int((~relocation["same_city"]).sum())
+
     partner_summary = (
-        placement_mart.groupby(["id_company", "company_name", "industry_sector", "kota"], dropna=False)
+        placement_mart.groupby(
+            ["id_company", "company_name", "industry_sector", "kota"],
+            dropna=False,
+        )
         .agg(
             candidates_sent=("id_tracking_student", "nunique"),
             placed=("canonical_outcome", lambda s: int((s == "Placement").sum())),
@@ -1343,80 +1371,510 @@ if current_page_key == "executive":
         .reset_index()
     )
     partner_summary = partner_summary[partner_summary["candidates_sent"] >= 5].copy()
-    partner_summary["success_rate"] = partner_summary["placed"] / partner_summary["candidates_sent"] * 100
-    partner_summary["ghosting_rate"] = partner_summary["ghosting"] / partner_summary["candidates_sent"] * 100
-    partner_summary = partner_summary.sort_values(["success_rate", "placed"], ascending=False).head(20)
-    partner_display = partner_summary.rename(
-        columns={
-            "company_name": "Perusahaan",
-            "industry_sector": "Sektor",
-            "kota": "Kota",
-            "candidates_sent": "Dikirim",
-            "placed": "Placed",
-            "success_rate": "Success Rate (%)",
-            "ghosting_rate": "Ghosting Rate (%)",
-        }
-    )[["Perusahaan", "Sektor", "Kota", "Dikirim", "Placed", "Success Rate (%)", "Ghosting Rate (%)"]]
-    st.dataframe(
-        partner_display,
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "Success Rate (%)": st.column_config.ProgressColumn(
-                "Success Rate (%)", min_value=0, max_value=100, format="%.1f%%"
-            ),
-            "Ghosting Rate (%)": st.column_config.NumberColumn(format="%.1f%%"),
-        },
+    partner_summary["success_rate"] = (
+        partner_summary["placed"] / partner_summary["candidates_sent"] * 100
+    )
+    partner_summary["ghosting_rate"] = (
+        partner_summary["ghosting"] / partner_summary["candidates_sent"] * 100
+    )
+    partner_summary = partner_summary.sort_values(
+        ["success_rate", "placed"], ascending=False
     )
 
-    # Dynamic decision-oriented insights
-    if not prodi_summary.empty and not partner_summary.empty:
-        top_prodi = prodi_summary.sort_values("placed_students", ascending=False).iloc[0]
-        best_partner = partner_summary.iloc[0]
-        i1, i2, i3 = st.columns(3, gap="medium")
+    if executive_section == "overview":
+        section_header(
+            "Ringkasan Penempatan",
+            "Gambaran cepat kondisi mahasiswa, mitra, dan perjalanan menuju penempatan.",
+            "RINGKASAN",
+            "section_executive_overview",
+        )
+        k1, k2, k3, k4 = st.columns(4, gap="medium")
+        with k1:
+            kpi_card(
+                "Mahasiswa Aktif",
+                format_int(active_students),
+                f"{format_int(total_students)} mahasiswa pada data utama",
+                "student",
+            )
+        with k2:
+            kpi_card(
+                "Mahasiswa Ditempatkan",
+                format_int(total_placed),
+                f"Tingkat penempatan {format_pct(placement_rate)}",
+                "placement",
+            )
+        with k3:
+            kpi_card(
+                "Perusahaan Mitra",
+                format_int(total_companies),
+                f"{format_int(total_requests)} kebutuhan kandidat tercatat",
+                "company",
+            )
+        with k4:
+            send_text = f"{avg_send_days:.1f} hari" if pd.notna(avg_send_days) else "Belum tersedia"
+            kpi_card(
+                "Waktu Kirim Kandidat",
+                send_text,
+                "Dari kebutuhan diterima hingga kandidat dikirim",
+                "clock",
+            )
+
+        section_header(
+            "Perjalanan Mahasiswa hingga Penempatan",
+            "Alur dari data mahasiswa, status aktif, ketersediaan, hingga sektor tempat bekerja.",
+            "ALUR DATA",
+            "section_executive_flow",
+        )
+
+        labels = ["Semua Mahasiswa"]
+        sources: list[int] = []
+        targets: list[int] = []
+        values: list[int] = []
+        node_colors = [CHART_COLORS[0]]
+        link_colors: list[str] = []
+
+        def rgba(hex_color: str, alpha: float = 0.24) -> str:
+            clean = hex_color.lstrip("#")
+            red, green, blue = (
+                int(clean[0:2], 16),
+                int(clean[2:4], 16),
+                int(clean[4:6], 16),
+            )
+            return f"rgba({red},{green},{blue},{alpha})"
+
+        def add_link(source_label: str, target_label: str, value: int, color: str) -> None:
+            if value <= 0:
+                return
+            if source_label not in labels:
+                labels.append(source_label)
+                node_colors.append(CHART_COLORS[len(labels) % len(CHART_COLORS)])
+            if target_label not in labels:
+                labels.append(target_label)
+                node_colors.append(color)
+            sources.append(labels.index(source_label))
+            targets.append(labels.index(target_label))
+            values.append(int(value))
+            link_colors.append(rgba(color, 0.22))
+
+        status_display = {
+            "Active": "Aktif",
+            "Inactive": "Tidak aktif",
+            "Cuti": "Cuti",
+            "Lulus": "Lulus",
+            "Belum diketahui": "Belum diketahui",
+        }
+        status_color = {
+            "Active": CHART_COLORS[6],
+            "Inactive": CHART_COLORS[8],
+            "Cuti": CHART_COLORS[3],
+            "Lulus": CHART_COLORS[1],
+        }
+        known_status_total = 0
+        for status_name, count in status_counts.items():
+            known_status_total += int(count)
+            add_link(
+                "Semua Mahasiswa",
+                status_display.get(str(status_name), str(status_name)),
+                int(count),
+                status_color.get(str(status_name), TEXT_LOW),
+            )
+        add_link(
+            "Semua Mahasiswa",
+            "Belum terhubung ke status",
+            max(total_students - known_status_total, 0),
+            TEXT_LOW,
+        )
+        add_link("Aktif", "Ditempatkan", len(placed_active_set), CHART_COLORS[0])
+        add_link("Aktif", "Tersedia", len(available_active_set), CHART_COLORS[5])
+        add_link("Aktif", "Status aktif lainnya", len(other_active_set), CHART_COLORS[2])
+
+        top_sectors = sector_counts.head(7)
+        remainder = max(len(placed_active_set) - int(top_sectors.sum()), 0)
+        if remainder:
+            top_sectors.loc["Sektor lain / belum terpetakan"] = remainder
+        for sector, count in top_sectors.items():
+            add_link(
+                "Ditempatkan",
+                str(sector),
+                int(count),
+                CHART_COLORS[(len(labels) + int(count)) % len(CHART_COLORS)],
+            )
+
+        sankey = go.Figure(
+            go.Sankey(
+                arrangement="snap",
+                node={
+                    "pad": 17,
+                    "thickness": 17,
+                    "line": {"color": "rgba(20,112,107,.18)", "width": 0.8},
+                    "label": [f"<b>{label}</b>" for label in labels],
+                    "color": node_colors,
+                },
+                link={
+                    "source": sources,
+                    "target": targets,
+                    "value": values,
+                    "color": link_colors,
+                },
+            )
+        )
+        style_figure(sankey, 455)
+        sankey.update_layout(
+            font={"family": "Encode Sans", "size": 12, "color": TEXT_HIGH},
+            title_text="",
+        )
+        st.plotly_chart(
+            sankey,
+            use_container_width=True,
+            config=PLOTLY_CONFIG,
+            key="sankey_chart",
+        )
+
+    elif executive_section == "placement":
+        section_header(
+            "Penempatan Mahasiswa",
+            "Bandingkan program studi, perpindahan kota, dan sektor tujuan penempatan.",
+            "PENEMPATAN",
+            "section_executive_placement",
+        )
+        left, right = st.columns([1.28, 0.72], gap="large")
+
+        with left:
+            st.markdown(
+                '<div class="chart-panel-label">Penempatan berdasarkan Program Studi</div>',
+                unsafe_allow_html=True,
+            )
+            prodi_show = (
+                prodi_summary.sort_values("placed_students", ascending=False)
+                .head(12)
+                .sort_values("placed_students")
+            )
+            fig_prodi = px.bar(
+                prodi_show,
+                x="placed_students",
+                y="program_studi",
+                orientation="h",
+                text="placed_students",
+                custom_data=["placement_rate", "total_students"],
+            )
+            fig_prodi.update_traces(
+                marker_color=[
+                    CHART_COLORS[i % len(CHART_COLORS)]
+                    for i in range(len(prodi_show))
+                ],
+                textposition="outside",
+                hovertemplate=(
+                    "<b>%{y}</b><br>Ditempatkan: %{x:,.0f}"
+                    "<br>Total mahasiswa: %{customdata[1]:,.0f}"
+                    "<br>Tingkat penempatan: %{customdata[0]:.1f}%<extra></extra>"
+                ),
+            )
+            style_figure(fig_prodi, 555)
+            fig_prodi.update_layout(
+                xaxis_title="Mahasiswa ditempatkan",
+                yaxis_title=None,
+                margin={"l": 12, "r": 32, "t": 8, "b": 30},
+            )
+            st.plotly_chart(fig_prodi, use_container_width=True, config=PLOTLY_CONFIG)
+
+        with right:
+            st.markdown(
+                '<div class="chart-panel-label">Kota Asal dan Lokasi Kerja</div>',
+                unsafe_allow_html=True,
+            )
+            donut_data = pd.DataFrame(
+                {
+                    "Kategori": ["Kota sama", "Bekerja di kota lain"],
+                    "Jumlah": [same_city, relocate],
+                }
+            )
+            fig_donut = px.pie(
+                donut_data,
+                names="Kategori",
+                values="Jumlah",
+                hole=0.64,
+                color="Kategori",
+                color_discrete_map={
+                    "Kota sama": CHART_COLORS[5],
+                    "Bekerja di kota lain": CHART_COLORS[1],
+                },
+            )
+            fig_donut.update_traces(
+                textinfo="percent+label",
+                hovertemplate="%{label}: %{value:,.0f}<extra></extra>",
+            )
+            style_figure(fig_donut, 255)
+            fig_donut.update_layout(showlegend=False)
+            st.plotly_chart(fig_donut, use_container_width=True, config=PLOTLY_CONFIG)
+
+            st.markdown(
+                '<div class="chart-panel-label">Sektor Penempatan Terbanyak</div>',
+                unsafe_allow_html=True,
+            )
+            sector_show = (
+                sector_counts.head(6)
+                .rename_axis("Sektor")
+                .reset_index(name="Jumlah")
+                .sort_values("Jumlah")
+            )
+            fig_sector = px.bar(
+                sector_show,
+                x="Jumlah",
+                y="Sektor",
+                orientation="h",
+                text="Jumlah",
+            )
+            fig_sector.update_traces(
+                marker_color=[
+                    CHART_COLORS[(i + 2) % len(CHART_COLORS)]
+                    for i in range(len(sector_show))
+                ],
+                textposition="outside",
+                hovertemplate="%{y}: %{x:,.0f}<extra></extra>",
+            )
+            style_figure(fig_sector, 255)
+            fig_sector.update_layout(
+                xaxis_title=None,
+                yaxis_title=None,
+                margin={"l": 8, "r": 28, "t": 5, "b": 12},
+            )
+            st.plotly_chart(fig_sector, use_container_width=True, config=PLOTLY_CONFIG)
+
+    elif executive_section == "partners":
+        section_header(
+            "Mitra dan Wilayah",
+            "Lihat persebaran perusahaan serta mitra dengan hasil penempatan terbaik.",
+            "MITRA",
+            "section_executive_partners",
+        )
+        map_col, table_col = st.columns([1.02, 0.98], gap="large")
+
+        CITY_COORDINATES = {
+            "Jakarta": (-6.2088, 106.8456),
+            "Surakarta": (-7.5755, 110.8243),
+            "Yogyakarta": (-7.7956, 110.3695),
+            "Semarang": (-6.9667, 110.4167),
+            "Bandung": (-6.9175, 107.6191),
+            "Surabaya": (-7.2575, 112.7521),
+            "Malang": (-7.9666, 112.6326),
+            "Bekasi": (-6.2383, 106.9756),
+            "Tangerang": (-6.1783, 106.6319),
+            "Depok": (-6.4025, 106.7942),
+            "Bogor": (-6.5950, 106.8166),
+            "Karanganyar": (-7.5961, 110.9508),
+            "Klaten": (-7.7058, 110.6067),
+            "Boyolali": (-7.5331, 110.5958),
+            "Magelang": (-7.4797, 110.2177),
+        }
+        city_counts = (
+            company.get("kota", pd.Series(dtype=str))
+            .value_counts()
+            .rename_axis("kota")
+            .reset_index(name="jumlah_perusahaan")
+        )
+        city_counts["lat"] = city_counts["kota"].map(
+            lambda x: CITY_COORDINATES.get(str(x), (np.nan, np.nan))[0]
+        )
+        city_counts["lon"] = city_counts["kota"].map(
+            lambda x: CITY_COORDINATES.get(str(x), (np.nan, np.nan))[1]
+        )
+        geo_data = city_counts.dropna(subset=["lat", "lon"])
+
+        with map_col:
+            st.markdown(
+                '<div class="chart-panel-label">Sebaran Perusahaan Mitra</div>',
+                unsafe_allow_html=True,
+            )
+            if not geo_data.empty:
+                map_fig = px.scatter_mapbox(
+                    geo_data,
+                    lat="lat",
+                    lon="lon",
+                    size="jumlah_perusahaan",
+                    color="jumlah_perusahaan",
+                    hover_name="kota",
+                    hover_data={
+                        "lat": False,
+                        "lon": False,
+                        "jumlah_perusahaan": ":,.0f",
+                    },
+                    color_continuous_scale=[
+                        [0, CHART_COLORS[5]],
+                        [0.5, CHART_COLORS[1]],
+                        [1, CHART_COLORS[2]],
+                    ],
+                    size_max=40,
+                    zoom=4.3,
+                    center={"lat": -7.2, "lon": 110.5},
+                )
+                map_fig.update_layout(
+                    mapbox_style="carto-positron",
+                    coloraxis_showscale=False,
+                )
+                style_figure(map_fig, 535)
+                st.plotly_chart(
+                    map_fig,
+                    use_container_width=True,
+                    config=PLOTLY_CONFIG,
+                )
+            else:
+                st.info("Belum ada kota yang dapat dipetakan.")
+
+        with table_col:
+            st.markdown(
+                '<div class="chart-panel-label">Mitra dengan Hasil Penempatan Terbaik</div>',
+                unsafe_allow_html=True,
+            )
+            partner_display = (
+                partner_summary.head(12)
+                .rename(
+                    columns={
+                        "company_name": "Perusahaan",
+                        "industry_sector": "Sektor",
+                        "kota": "Kota",
+                        "candidates_sent": "Kandidat Dikirim",
+                        "placed": "Ditempatkan",
+                        "success_rate": "Tingkat Keberhasilan (%)",
+                        "ghosting_rate": "Tanpa Kabar (%)",
+                    }
+                )[
+                    [
+                        "Perusahaan",
+                        "Sektor",
+                        "Kota",
+                        "Kandidat Dikirim",
+                        "Ditempatkan",
+                        "Tingkat Keberhasilan (%)",
+                        "Tanpa Kabar (%)",
+                    ]
+                ]
+            )
+            st.dataframe(
+                partner_display,
+                use_container_width=True,
+                hide_index=True,
+                height=535,
+                column_config={
+                    "Tingkat Keberhasilan (%)": st.column_config.ProgressColumn(
+                        "Tingkat Keberhasilan (%)",
+                        min_value=0,
+                        max_value=100,
+                        format="%.1f%%",
+                    ),
+                    "Tanpa Kabar (%)": st.column_config.NumberColumn(format="%.1f%%"),
+                },
+            )
+
+    else:
+        section_header(
+            "Insight Penting",
+            "Ringkasan temuan yang dapat membantu CDC menentukan fokus tindakan.",
+            "INSIGHT",
+            "section_executive_insights",
+        )
+        top_prodi = (
+            prodi_summary.sort_values("placed_students", ascending=False).iloc[0]
+            if not prodi_summary.empty
+            else None
+        )
+        best_partner = partner_summary.iloc[0] if not partner_summary.empty else None
+        mobility_rate = safe_divide(relocate, same_city + relocate) * 100
+
+        i1, i2, i3 = st.columns(3, gap="large")
         with i1:
             insight_card(
-                "Sumber talenta utama",
-                f"{top_prodi['program_studi']} menyumbang {format_int(top_prodi['placed_students'])} mahasiswa placed dengan rate {top_prodi['placement_rate']:.1f}%.",
+                "Sumber kandidat terbesar",
+                (
+                    f"{top_prodi['program_studi']} menyumbang "
+                    f"{format_int(top_prodi['placed_students'])} mahasiswa ditempatkan, "
+                    f"dengan tingkat penempatan {top_prodi['placement_rate']:.1f}%."
+                    if top_prodi is not None
+                    else "Belum ada data program studi yang dapat dirangkum."
+                ),
                 icon_key="talent_source",
             )
         with i2:
             insight_card(
                 "Mitra paling efektif",
-                f"{best_partner['company_name']} memiliki success rate {best_partner['success_rate']:.1f}% dari {format_int(best_partner['candidates_sent'])} kandidat.",
+                (
+                    f"{best_partner['company_name']} mencatat tingkat keberhasilan "
+                    f"{best_partner['success_rate']:.1f}% dari "
+                    f"{format_int(best_partner['candidates_sent'])} kandidat."
+                    if best_partner is not None
+                    else "Belum ada mitra yang memenuhi batas minimum kandidat."
+                ),
                 icon_key="partner_effective",
             )
         with i3:
-            mobility_rate = safe_divide(relocate, same_city + relocate) * 100
             insight_card(
                 "Mobilitas penempatan",
-                f"{mobility_rate:.1f}% placement terpetakan berlangsung di luar kota domisili mahasiswa.",
+                f"{mobility_rate:.1f}% penempatan yang terpetakan berlangsung di luar kota asal mahasiswa.",
                 icon_key="mobility",
+            )
+
+        st.markdown('<div style="height:18px;"></div>', unsafe_allow_html=True)
+        summary_left, summary_right = st.columns(2, gap="large")
+        with summary_left:
+            st.markdown(
+                f"""
+                <div class="hop-card">
+                  <div class="card-title">Peluang tindakan</div>
+                  <div class="card-sub">
+                    Prioritaskan program studi dengan jumlah mahasiswa aktif besar tetapi
+                    tingkat penempatan masih rendah. Gunakan bagian “Penempatan Mahasiswa”
+                    untuk membandingkannya.
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with summary_right:
+            st.markdown(
+                f"""
+                <div class="hop-card">
+                  <div class="card-title">Catatan untuk kemitraan</div>
+                  <div class="card-sub">
+                    Pertahankan hubungan dengan mitra yang memiliki tingkat keberhasilan tinggi,
+                    lalu evaluasi mitra dengan banyak kandidat tetapi hasil penempatan rendah.
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
             )
 
 
 # =============================================================================
-# PAGE 2: TALENT MATCHING SANDBOX
-# Covers BT-01, BT-03, BT-06, and BT-08.
+# PAGE 2: TEMUKAN KANDIDAT
+# Dibagi menjadi dua bagian: pengaturan dan hasil.
 # =============================================================================
 elif current_page_key == "matching":
-    section_header(
-        "Talent Matching & Eligibility Sandbox",
-        "Pilih talent request, terapkan filter kelayakan, lalu hitung indeks kecocokan berbobot terhadap mahasiswa available.",
-        "BT-01 · BT-03 · BT-06 · BT-08",
+    matching_section = section_navigation(
+        "matching",
+        {
+            "setup": ("Atur Kriteria", "section_matching_setup"),
+            "results": ("Lihat Kandidat", "section_matching_results"),
+        },
     )
 
-    # Request mart with priority score.
     request_mart = talent_request.merge(
-        company[["id_company", "kota", "company_name", "industry_sector"]].drop_duplicates("id_company"),
+        company[["id_company", "kota", "company_name", "industry_sector"]]
+        .drop_duplicates("id_company"),
         on="id_company",
         how="left",
         suffixes=("", "_master"),
     )
-    request_mart["request_age"] = (AS_OF - request_mart["request_date"]).dt.days.clip(lower=0)
-    request_mart["priority_score"] = request_mart["request_age"] * 0.60 + request_mart["headcount"].fillna(0) * 0.40
+    request_mart["request_age"] = (
+        AS_OF - request_mart["request_date"]
+    ).dt.days.clip(lower=0)
+    request_mart["priority_score"] = (
+        request_mart["request_age"] * 0.60
+        + request_mart["headcount"].fillna(0) * 0.40
+    )
 
-    latest_tc = tracking_company.sort_values("request_date", na_position="first").drop_duplicates("id_talent_req", keep="last")
+    latest_tc = (
+        tracking_company.sort_values("request_date", na_position="first")
+        .drop_duplicates("id_talent_req", keep="last")
+    )
     request_mart = request_mart.merge(
         latest_tc[["id_talent_req", "progress", "send_date"]],
         on="id_talent_req",
@@ -1425,20 +1883,20 @@ elif current_page_key == "matching":
     request_mart["is_open"] = request_mart["progress"].fillna("Draft").ne("Closed")
     open_requests = request_mart[request_mart["is_open"]].copy()
 
-    # Page 2 decision summary: candidate supply, profile quality, and company demand.
     readiness_latest = (
         readiness.sort_values("sync_date", na_position="first")
         .drop_duplicates("NIM", keep="last")
         .copy()
     )
-
     candidate_ready_mask = (
         readiness_latest.get("status", "").eq("Active")
         & readiness_latest.get("ketersediaan", "").eq("Available")
         & readiness_latest.get("CV", "").eq("Ada")
         & ~readiness_latest["is_placed"]
     )
-    candidate_ready_count = int(readiness_latest.loc[candidate_ready_mask, "NIM"].nunique())
+    candidate_ready_count = int(
+        readiness_latest.loc[candidate_ready_mask, "NIM"].nunique()
+    )
     active_available_count = int(
         readiness_latest.loc[
             readiness_latest.get("status", "").eq("Active")
@@ -1446,121 +1904,72 @@ elif current_page_key == "matching":
             "NIM",
         ].nunique()
     )
-
     profile_complete_mask = (
-        readiness_latest.get("IPK", pd.Series(np.nan, index=readiness_latest.index)).notna()
-        & readiness_latest.get("program_studi", pd.Series("", index=readiness_latest.index)).fillna("").astype(str).str.strip().ne("")
-        & readiness_latest.get("domisili", pd.Series("", index=readiness_latest.index)).fillna("").astype(str).str.strip().ne("")
-        & readiness_latest.get("CV", pd.Series("", index=readiness_latest.index)).eq("Ada")
-        & readiness_latest.get("tools_normalized", pd.Series([[] for _ in range(len(readiness_latest))], index=readiness_latest.index)).map(bool)
+        readiness_latest.get(
+            "IPK", pd.Series(np.nan, index=readiness_latest.index)
+        ).notna()
+        & readiness_latest.get(
+            "program_studi", pd.Series("", index=readiness_latest.index)
+        ).fillna("").astype(str).str.strip().ne("")
+        & readiness_latest.get(
+            "domisili", pd.Series("", index=readiness_latest.index)
+        ).fillna("").astype(str).str.strip().ne("")
+        & readiness_latest.get(
+            "CV", pd.Series("", index=readiness_latest.index)
+        ).eq("Ada")
+        & readiness_latest.get(
+            "tools_normalized",
+            pd.Series([[] for _ in range(len(readiness_latest))], index=readiness_latest.index),
+        ).map(bool)
     )
-    profile_complete_count = int(readiness_latest.loc[profile_complete_mask, "NIM"].nunique())
-    profile_complete_rate = safe_divide(profile_complete_count, readiness_latest["NIM"].nunique()) * 100
-
+    profile_complete_count = int(
+        readiness_latest.loc[profile_complete_mask, "NIM"].nunique()
+    )
+    profile_complete_rate = (
+        safe_divide(profile_complete_count, readiness_latest["NIM"].nunique()) * 100
+    )
     active_request_count = int(open_requests["id_talent_req"].nunique())
-    active_headcount = int(open_requests.get("headcount", pd.Series(dtype=float)).fillna(0).sum())
+    active_headcount = int(
+        open_requests.get("headcount", pd.Series(dtype=float)).fillna(0).sum()
+    )
 
-    s1, s2, s3 = st.columns(3, gap="large")
-    with s1:
-        kpi_card(
-            "Kandidat Siap",
-            format_int(candidate_ready_count),
-            f"{format_int(active_available_count)} mahasiswa active & available",
-            "candidate_ready",
-        )
-    with s2:
-        kpi_card(
-            "Profil Lengkap",
-            format_pct(profile_complete_rate),
-            f"{format_int(profile_complete_count)} profil siap dianalisis",
-            "profile_complete",
-        )
-    with s3:
-        kpi_card(
-            "Request Aktif",
-            format_int(active_request_count),
-            f"Total kebutuhan {format_int(active_headcount)} kandidat",
-            "request_active",
-        )
-
-    st.markdown('<div style="height:28px;"></div>', unsafe_allow_html=True)
-
-    # [LAYOUT 03] The HTML uses three visual panels. In Streamlit, filters and
-    # request selection are grouped in one form, then results use the full width.
-    with st.form("matching_form"):
-        f1, f2, f3 = st.columns([1.05, 1.05, 1.2], gap="large")
-
-        with f1:
-            panel_heading("Panel Kelayakan", "Atur syarat minimum kandidat", "panel_eligibility")
-            ipk_min = st.slider("IPK minimum", 2.00, 4.00, 2.50, 0.05)
-            semester_min = st.slider("Semester aktif minimum", 1, 14, 1)
-            cv_required = st.checkbox("Wajib memiliki CV", value=True)
-            portfolio_required = st.checkbox("Wajib memiliki portofolio", value=False)
-
-        with f2:
-            panel_heading("Filter Mahasiswa", "Persempit kandidat sesuai kebutuhan", "panel_filter")
-            domicile_options = ["Semua kota"] + sorted(readiness["domisili"].dropna().astype(str).unique().tolist())
-            prodi_options = ["Semua program studi"] + sorted(readiness["program_studi"].dropna().astype(str).unique().tolist())
-            domicile_filter = st.selectbox("Domisili", domicile_options)
-            prodi_filter = st.selectbox("Program studi", prodi_options)
-            placement_filter = st.selectbox(
-                "Jenis penempatan request",
-                ["Semua", "Magang", "Part-time", "Full-time"],
-            )
-
-        with f3:
-            panel_heading("Permintaan Talenta Aktif", "Pilih posisi yang akan dicocokkan", "panel_request")
-            request_view = open_requests.copy()
-            if placement_filter != "Semua":
-                request_view = request_view[request_view["jenis_penempatan"] == placement_filter]
-            request_view = request_view.sort_values("priority_score", ascending=False).head(1000)
-            # Fallback keeps the form usable if a category has no open request.
-            if request_view.empty:
-                st.warning("Tidak ada request aktif pada jenis penempatan ini. Menampilkan seluruh request aktif.")
-                request_view = open_requests.sort_values("priority_score", ascending=False).head(1000).copy()
-            request_view["label"] = (
-                request_view["id_talent_req"].astype(str)
-                + " · "
-                + request_view["nama_posisi"].astype(str)
-                + " | "
-                + request_view["nama_perusahaan"].astype(str)
-            )
-            selected_label = st.selectbox("Pilih request", request_view["label"].tolist())
-            selected_request = request_view.loc[request_view["label"] == selected_label].iloc[0]
-            st.caption(
-                f"Prioritas {selected_request['priority_score']:.1f} · "
-                f"usia request {int(selected_request['request_age'])} hari · "
-                f"headcount {int(selected_request['headcount'])}"
-            )
-
-        run_matching = st.form_submit_button("Hitung Kandidat Terbaik", use_container_width=True)
-
-    # Matching dictionaries. Add new aliases here to improve text extraction.
     TOOL_ALIASES = {
-        "python": ["python"], "r": [" r ", "python/r"], "sql": ["sql"],
-        "power bi": ["power bi", "powerbi"], "tableau": ["tableau"],
-        "excel": ["excel", "microsoft excel"], "figma": ["figma"],
-        "adobe xd": ["adobe xd"], "autocad": ["autocad"],
-        "solidworks": ["solidworks"], "sap": ["sap"], "spss": ["spss"],
-        "javascript": ["javascript"], "react": ["react"], "html/css": ["html/css", "html", "css"],
-        "git": ["git"], "seo": ["seo"], "matlab": ["matlab"],
-        "arcgis": ["arcgis"], "qgis": ["qgis"], "myob": ["myob"],
-        "accurate": ["accurate"], "canva": ["canva"],
+        "python": ["python"],
+        "r": [" r ", "python/r"],
+        "sql": ["sql"],
+        "power bi": ["power bi", "powerbi"],
+        "tableau": ["tableau"],
+        "excel": ["excel", "microsoft excel"],
+        "figma": ["figma"],
+        "adobe xd": ["adobe xd"],
+        "autocad": ["autocad"],
+        "solidworks": ["solidworks"],
+        "sap": ["sap"],
+        "spss": ["spss"],
+        "javascript": ["javascript"],
+        "react": ["react"],
+        "html/css": ["html/css", "html", "css"],
+        "git": ["git"],
+        "seo": ["seo"],
+        "matlab": ["matlab"],
+        "arcgis": ["arcgis"],
+        "qgis": ["qgis"],
+        "myob": ["myob"],
+        "accurate": ["accurate"],
+        "canva": ["canva"],
     }
 
-    def extract_request_tools(text: object) -> list[str]:
-        padded = f" {normalize_text(text)} "
-        result = []
-        for canonical, aliases in TOOL_ALIASES.items():
-            if any(alias in padded for alias in aliases):
-                result.append(canonical)
-        return result
+    def extract_request_tools(text_value: object) -> list[str]:
+        padded = f" {normalize_text(text_value)} "
+        return [
+            canonical
+            for canonical, aliases in TOOL_ALIASES.items()
+            if any(alias in padded for alias in aliases)
+        ]
 
     def jaccard(left: Iterable[str], right: Iterable[str]) -> float:
         a, b = set(left), set(right)
-        if not a or not b:
-            return 0.0
-        return len(a & b) / len(a | b)
+        return len(a & b) / len(a | b) if a and b else 0.0
 
     def prodi_similarity(student_prodi: object, requirement: object) -> float:
         student_value = normalize_text(student_prodi)
@@ -1568,155 +1977,346 @@ elif current_page_key == "matching":
         if student_value in needed:
             return 1.0
         student_words = {word for word in student_value.split() if len(word) > 3}
-        if any(student_words.intersection(set(item.split())) for item in needed):
-            return 0.5
-        return 0.0
+        return 0.5 if any(
+            student_words.intersection(set(item.split())) for item in needed
+        ) else 0.0
 
-    def compute_matching_results(request_row: pd.Series) -> pd.DataFrame:
-        pool = readiness[
-            readiness.get("status", "").eq("Active")
-            & readiness.get("ketersediaan", "").eq("Available")
-            & readiness["IPK"].ge(ipk_min)
-            & readiness["semester"].ge(semester_min)
-        ].copy()
-        if cv_required:
-            pool = pool[pool.get("CV", "").eq("Ada")]
-        if portfolio_required:
-            pool = pool[pool.get("portofolio", "").eq("Ada")]
-        if domicile_filter != "Semua kota":
-            pool = pool[pool["domisili"].astype(str).eq(domicile_filter)]
-        if prodi_filter != "Semua program studi":
-            pool = pool[pool["program_studi"].astype(str).eq(prodi_filter)]
-
-        request_tools = extract_request_tools(request_row.get("deskripsi_requirement", ""))
-        working_arrangement = normalize_text(request_row.get("working_arrangement", ""))
-        request_city = normalize_text(request_row.get("kota", ""))
-        minimum_semester = float(request_row.get("minimum_semester", 0) or 0)
-
-        rows = []
-        for candidate in pool.itertuples(index=False):
-            candidate_data = candidate._asdict()
-            candidate_tools = set(candidate_data.get("tools_normalized", []))
-            tool_score = jaccard(candidate_tools, request_tools)
-            academic_score = 1.0 if float(candidate_data.get("semester", 0) or 0) >= minimum_semester else 0.0
-            study_score = prodi_similarity(candidate_data.get("program_studi"), request_row.get("bidang_studi_dibutuhkan"))
-            location_score = 1.0 if "wfh" in working_arrangement else (
-                1.0 if normalize_text(candidate_data.get("domisili")) == request_city else 0.0
-            )
-
-            # Matching formula follows the HTML prototype:
-            # 40% tools + 20% semester + 25% program study + 15% location.
-            total_score = (
-                0.40 * tool_score
-                + 0.20 * academic_score
-                + 0.25 * study_score
-                + 0.15 * location_score
-            ) * 100
-            common_tools = sorted(candidate_tools.intersection(request_tools))
-
-            rows.append(
-                {
-                    "NIM": str(candidate_data.get("NIM", "")),
-                    "Nama": candidate_data.get("nama", "-"),
-                    "Program Studi": candidate_data.get("program_studi", "-"),
-                    "Semester": candidate_data.get("semester", np.nan),
-                    "IPK": candidate_data.get("IPK", np.nan),
-                    "Domisili": candidate_data.get("domisili", "-"),
-                    "Tools Cocok": ", ".join(common_tools) if common_tools else "-",
-                    "Skor Tools": tool_score * 100,
-                    "Skor Prodi": study_score * 100,
-                    "Skor Lokasi": location_score * 100,
-                    "Match Score (%)": total_score,
-                }
-            )
-
-        result = pd.DataFrame(rows)
-        if not result.empty:
-            result = result.sort_values(["Match Score (%)", "IPK"], ascending=False).head(40)
-        return result
-
-    if run_matching:
-        with st.spinner("Menghitung kecocokan kandidat..."):
-            st.session_state["matching_results"] = compute_matching_results(selected_request)
-            st.session_state["matching_request"] = selected_request.to_dict()
-
-    if "matching_results" in st.session_state:
-        result = st.session_state["matching_results"].copy()
-        request_info = st.session_state["matching_request"]
-
-        st.markdown(
-            f"""
-            <div class="hop-card" style="margin-top:18px;">
-              <div class="card-title">{html.escape(str(request_info.get('nama_posisi', '-')))}</div>
-              <div class="card-sub">
-                {html.escape(str(request_info.get('nama_perusahaan', '-')))} ·
-                {html.escape(str(request_info.get('jenis_penempatan', '-')))} ·
-                {html.escape(str(request_info.get('working_arrangement', '-')))} ·
-                headcount {int(request_info.get('headcount', 0) or 0)}
-              </div>
-              <div class="card-sub" style="margin-top:10px;">{html.escape(str(request_info.get('deskripsi_requirement', '-')))}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+    if matching_section == "setup":
+        section_header(
+            "Pencocokan Kandidat",
+            "Pilih kebutuhan perusahaan, atur syarat kandidat, lalu cari kandidat yang paling sesuai.",
+            "PENCOCOKAN",
+            "section_matching_setup",
         )
-
-        if result.empty:
-            st.warning("Tidak ada kandidat yang memenuhi kombinasi filter saat ini. Longgarkan filter kelayakan lalu jalankan kembali.")
-        else:
-            display_result = result.copy()
-            if IS_PUBLIC:
-                display_result["Nama"] = display_result["Nama"].map(mask_name)
-                display_result["NIM"] = display_result["NIM"].map(mask_nim)
-
-            st.dataframe(
-                display_result,
-                use_container_width=True,
-                hide_index=True,
-                column_config={
-                    "IPK": st.column_config.NumberColumn(format="%.2f"),
-                    "Skor Tools": st.column_config.NumberColumn(format="%.0f%%"),
-                    "Skor Prodi": st.column_config.NumberColumn(format="%.0f%%"),
-                    "Skor Lokasi": st.column_config.NumberColumn(format="%.0f%%"),
-                    "Match Score (%)": st.column_config.ProgressColumn(
-                        "Match Score (%)", min_value=0, max_value=100, format="%.1f%%"
-                    ),
-                },
+        s1, s2, s3 = st.columns(3, gap="large")
+        with s1:
+            kpi_card(
+                "Kandidat Siap",
+                format_int(candidate_ready_count),
+                f"{format_int(active_available_count)} mahasiswa aktif dan tersedia",
+                "candidate_ready",
+            )
+        with s2:
+            kpi_card(
+                "Profil Lengkap",
+                format_pct(profile_complete_rate),
+                f"{format_int(profile_complete_count)} profil siap dianalisis",
+                "profile_complete",
+            )
+        with s3:
+            kpi_card(
+                "Kebutuhan Aktif",
+                format_int(active_request_count),
+                f"Total kebutuhan {format_int(active_headcount)} kandidat",
+                "request_active",
             )
 
-            # Internal simulation only. It does not write to parquet.
-            selection_nim = result["NIM"].map(mask_nim) if IS_PUBLIC else result["NIM"].astype(str)
-            selection_name = result["Nama"].map(mask_name) if IS_PUBLIC else result["Nama"].astype(str)
-            selection_labels = (
-                selection_nim
-                + " · "
-                + selection_name
-                + " · "
-                + result["Match Score (%)"].round(1).astype(str)
-                + "%"
-            ).tolist()
-            selected_candidates = st.multiselect(
-                "Pilih kandidat untuk draft pengiriman",
-                selection_labels,
-                max_selections=int(request_info.get("headcount", 1) or 1) * 3,
-            )
-            if st.button("Kirim ke Draft TRACKING COMPANY", use_container_width=True):
-                if selected_candidates:
-                    st.success(
-                        f"{len(selected_candidates)} kandidat masuk ke draft simulasi. Data parquet tidak diubah."
+        st.markdown('<div style="height:12px;"></div>', unsafe_allow_html=True)
+        with st.form("matching_form"):
+            f1, f2, f3 = st.columns([1.0, 1.0, 1.2], gap="large")
+
+            with f1:
+                panel_heading(
+                    "Syarat Dasar",
+                    "Atur batas minimum kandidat",
+                    "panel_eligibility",
+                )
+                ipk_min = st.slider("IPK minimum", 2.00, 4.00, 2.50, 0.05)
+                semester_min = st.slider("Semester minimum", 1, 14, 1)
+                cv_required = st.checkbox("Harus memiliki CV", value=True)
+                portfolio_required = st.checkbox(
+                    "Harus memiliki portofolio", value=False
+                )
+
+            with f2:
+                panel_heading(
+                    "Penyaring Kandidat",
+                    "Persempit kandidat sesuai kebutuhan",
+                    "panel_filter",
+                )
+                domicile_options = ["Semua kota"] + sorted(
+                    readiness["domisili"].dropna().astype(str).unique().tolist()
+                )
+                prodi_options = ["Semua program studi"] + sorted(
+                    readiness["program_studi"].dropna().astype(str).unique().tolist()
+                )
+                domicile_filter = st.selectbox("Kota asal", domicile_options)
+                prodi_filter = st.selectbox("Program studi", prodi_options)
+                placement_filter = st.selectbox(
+                    "Jenis kesempatan",
+                    ["Semua", "Magang", "Part-time", "Full-time"],
+                )
+
+            with f3:
+                panel_heading(
+                    "Kebutuhan Perusahaan",
+                    "Pilih posisi yang ingin dicari kandidatnya",
+                    "panel_request",
+                )
+                request_view = open_requests.copy()
+                if placement_filter != "Semua":
+                    request_view = request_view[
+                        request_view["jenis_penempatan"] == placement_filter
+                    ]
+                request_view = request_view.sort_values(
+                    "priority_score", ascending=False
+                ).head(1000)
+                if request_view.empty:
+                    request_view = open_requests.sort_values(
+                        "priority_score", ascending=False
+                    ).head(1000)
+                    st.warning(
+                        "Tidak ada kebutuhan pada jenis ini. Seluruh kebutuhan aktif ditampilkan."
+                    )
+
+                selected_request = None
+                if not request_view.empty:
+                    request_view["label"] = (
+                        request_view["id_talent_req"].astype(str)
+                        + " · "
+                        + request_view["nama_posisi"].astype(str)
+                        + " | "
+                        + request_view["nama_perusahaan"].astype(str)
+                    )
+                    selected_label = st.selectbox(
+                        "Pilih kebutuhan", request_view["label"].tolist()
+                    )
+                    selected_request = request_view.loc[
+                        request_view["label"] == selected_label
+                    ].iloc[0]
+                    st.caption(
+                        f"Urutan prioritas {selected_request['priority_score']:.1f} · "
+                        f"dibuka {int(selected_request['request_age'])} hari · "
+                        f"membutuhkan {int(selected_request['headcount'])} orang"
                     )
                 else:
-                    st.warning("Pilih minimal satu kandidat terlebih dahulu.")
+                    st.info("Belum ada kebutuhan perusahaan yang aktif.")
+
+            run_matching = st.form_submit_button(
+                "Cari Kandidat Terbaik",
+                use_container_width=True,
+                disabled=selected_request is None,
+            )
+
+        def compute_matching_results(request_row: pd.Series) -> pd.DataFrame:
+            pool = readiness[
+                readiness.get("status", "").eq("Active")
+                & readiness.get("ketersediaan", "").eq("Available")
+                & readiness["IPK"].ge(ipk_min)
+                & readiness["semester"].ge(semester_min)
+            ].copy()
+            if cv_required:
+                pool = pool[pool.get("CV", "").eq("Ada")]
+            if portfolio_required:
+                pool = pool[pool.get("portofolio", "").eq("Ada")]
+            if domicile_filter != "Semua kota":
+                pool = pool[pool["domisili"].astype(str).eq(domicile_filter)]
+            if prodi_filter != "Semua program studi":
+                pool = pool[pool["program_studi"].astype(str).eq(prodi_filter)]
+
+            request_tools = extract_request_tools(
+                request_row.get("deskripsi_requirement", "")
+            )
+            working_arrangement = normalize_text(
+                request_row.get("working_arrangement", "")
+            )
+            request_city = normalize_text(request_row.get("kota", ""))
+            minimum_semester = float(
+                request_row.get("minimum_semester", 0) or 0
+            )
+
+            rows = []
+            for candidate in pool.itertuples(index=False):
+                candidate_data = candidate._asdict()
+                candidate_tools = set(
+                    candidate_data.get("tools_normalized", [])
+                )
+                tool_score = jaccard(candidate_tools, request_tools)
+                academic_score = (
+                    1.0
+                    if float(candidate_data.get("semester", 0) or 0)
+                    >= minimum_semester
+                    else 0.0
+                )
+                study_score = prodi_similarity(
+                    candidate_data.get("program_studi"),
+                    request_row.get("bidang_studi_dibutuhkan"),
+                )
+                location_score = (
+                    1.0
+                    if "wfh" in working_arrangement
+                    else (
+                        1.0
+                        if normalize_text(candidate_data.get("domisili"))
+                        == request_city
+                        else 0.0
+                    )
+                )
+                total_score = (
+                    0.40 * tool_score
+                    + 0.20 * academic_score
+                    + 0.25 * study_score
+                    + 0.15 * location_score
+                ) * 100
+                common_tools = sorted(candidate_tools.intersection(request_tools))
+                rows.append(
+                    {
+                        "NIM": str(candidate_data.get("NIM", "")),
+                        "Nama": candidate_data.get("nama", "-"),
+                        "Program Studi": candidate_data.get("program_studi", "-"),
+                        "Semester": candidate_data.get("semester", np.nan),
+                        "IPK": candidate_data.get("IPK", np.nan),
+                        "Kota Asal": candidate_data.get("domisili", "-"),
+                        "Keahlian yang Cocok": ", ".join(common_tools)
+                        if common_tools
+                        else "-",
+                        "Kecocokan Keahlian (%)": tool_score * 100,
+                        "Kecocokan Program Studi (%)": study_score * 100,
+                        "Kecocokan Lokasi (%)": location_score * 100,
+                        "Tingkat Kecocokan (%)": total_score,
+                    }
+                )
+            result = pd.DataFrame(rows)
+            return (
+                result.sort_values(
+                    ["Tingkat Kecocokan (%)", "IPK"], ascending=False
+                ).head(40)
+                if not result.empty
+                else result
+            )
+
+        if run_matching and selected_request is not None:
+            with st.spinner("Mencari kandidat yang paling sesuai..."):
+                st.session_state["matching_results"] = compute_matching_results(
+                    selected_request
+                )
+                st.session_state["matching_request"] = selected_request.to_dict()
+            # UX: hasil langsung dibuka setelah pengguna menekan tombol pencarian.
+            st.query_params["page"] = "matching"
+            st.query_params["section"] = "results"
+            st.rerun()
+
+    else:
+        section_header(
+            "Hasil Kandidat",
+            "Tinjau kandidat berdasarkan tingkat kecocokan dan kebutuhan posisi.",
+            "HASIL",
+            "section_matching_results",
+        )
+        _, edit_filter_col = st.columns([4.8, 1.2])
+        with edit_filter_col:
+            if st.button(
+                "Ubah Kriteria",
+                use_container_width=True,
+                key="edit_matching_criteria",
+            ):
+                st.query_params["page"] = "matching"
+                st.query_params["section"] = "setup"
+                st.rerun()
+
+        if "matching_results" not in st.session_state:
+            st.markdown(
+                """
+                <div class="hop-card" style="padding:34px;text-align:center;">
+                  <div class="card-title">Belum ada hasil pencocokan</div>
+                  <div class="card-sub">
+                    Buka bagian “Atur Pencocokan”, pilih kebutuhan perusahaan,
+                    lalu tekan tombol “Cari Kandidat Terbaik”.
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        else:
+            result = st.session_state["matching_results"].copy()
+            request_info = st.session_state["matching_request"]
+            info_col, action_col = st.columns([1.5, 1.0], gap="large")
+            with info_col:
+                st.markdown(
+                    f"""
+                    <div class="hop-card">
+                      <div class="card-title">{html.escape(str(request_info.get('nama_posisi', '-')))}</div>
+                      <div class="card-sub">
+                        {html.escape(str(request_info.get('nama_perusahaan', '-')))} ·
+                        {html.escape(str(request_info.get('jenis_penempatan', '-')))} ·
+                        {html.escape(str(request_info.get('working_arrangement', '-')))} ·
+                        kebutuhan {int(request_info.get('headcount', 0) or 0)} orang
+                      </div>
+                      <div class="card-sub" style="margin-top:8px;">
+                        {html.escape(str(request_info.get('deskripsi_requirement', '-')))}
+                      </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+            if result.empty:
+                st.warning(
+                    "Belum ada kandidat yang memenuhi seluruh syarat. Longgarkan penyaring lalu coba lagi."
+                )
+            else:
+                display_result = result.copy()
+                if IS_PUBLIC:
+                    display_result["Nama"] = display_result["Nama"].map(mask_name)
+                    display_result["NIM"] = display_result["NIM"].map(mask_nim)
+
+                with action_col:
+                    raw_nim = result["NIM"].map(mask_nim) if IS_PUBLIC else result["NIM"].astype(str)
+                    raw_name = result["Nama"].map(mask_name) if IS_PUBLIC else result["Nama"].astype(str)
+                    selection_labels = (
+                        raw_nim
+                        + " · "
+                        + raw_name
+                        + " · "
+                        + result["Tingkat Kecocokan (%)"].round(1).astype(str)
+                        + "%"
+                    ).tolist()
+                    selected_candidates = st.multiselect(
+                        "Pilih kandidat untuk daftar kirim",
+                        selection_labels,
+                        max_selections=int(request_info.get("headcount", 1) or 1) * 3,
+                    )
+                    if st.button("Tambahkan ke Daftar Kirim", use_container_width=True):
+                        if selected_candidates:
+                            st.success(
+                                f"{len(selected_candidates)} kandidat ditambahkan ke daftar simulasi."
+                            )
+                        else:
+                            st.warning("Pilih minimal satu kandidat.")
+
+                st.dataframe(
+                    display_result,
+                    use_container_width=True,
+                    hide_index=True,
+                    height=515,
+                    column_config={
+                        "IPK": st.column_config.NumberColumn(format="%.2f"),
+                        "Kecocokan Keahlian (%)": st.column_config.NumberColumn(format="%.0f%%"),
+                        "Kecocokan Program Studi (%)": st.column_config.NumberColumn(format="%.0f%%"),
+                        "Kecocokan Lokasi (%)": st.column_config.NumberColumn(format="%.0f%%"),
+                        "Tingkat Kecocokan (%)": st.column_config.ProgressColumn(
+                            "Tingkat Kecocokan (%)",
+                            min_value=0,
+                            max_value=100,
+                            format="%.1f%%",
+                        ),
+                    },
+                )
 
 
 # =============================================================================
-# PAGE 3: OPERATIONAL FUNNEL AND GHOSTING
-# Covers BT-02 and BT-05.
+# PAGE 3: PANTAU PROSES SELEKSI
+# Dibagi menjadi empat bagian agar tidak memerlukan scroll panjang.
 # =============================================================================
 else:
-    section_header(
-        "Corong Rekrutmen",
-        "Distribusi tahapan seleksi mahasiswa dan titik proses dengan volume kandidat terbesar.",
-        "BT-02 · PIPELINE",
+    operations_section = section_navigation(
+        "operations",
+        {
+            "pipeline": ("Tahapan Seleksi", "section_operations_pipeline"),
+            "delays": ("Respons Terlambat", "section_operations_delays"),
+            "followup": ("Daftar Tindak Lanjut", "section_operations_followup"),
+            "outcomes": ("Hasil Akhir Seleksi", "section_operations_outcomes"),
+        },
     )
 
     funnel_order = [
@@ -1735,86 +2335,29 @@ else:
         .astype(int)
     )
     funnel_df = funnel_counts.rename_axis("Tahap").reset_index(name="Kandidat")
+    funnel_df["Tahap Tampilan"] = funnel_df["Tahap"].map(stage_label)
 
-    # [LAYOUT 04] Adjust [1.05, 0.95] to resize funnel and status panels.
-    funnel_col, status_col = st.columns([1.05, 0.95], gap="large")
-    with funnel_col:
-        funnel_fig = go.Figure(
-            go.Funnel(
-                y=funnel_df["Tahap"],
-                x=funnel_df["Kandidat"],
-                textinfo="value+percent initial",
-                marker={"color": [CHART_COLORS[5], CHART_COLORS[0], CHART_COLORS[1], CHART_COLORS[3], CHART_COLORS[2], CHART_COLORS[6]]},
-                connector={"line": {"color": "#7A8A99", "width": 1.2}},
-            )
-        )
-        style_figure(funnel_fig, 470)
-        st.plotly_chart(funnel_fig, use_container_width=True, config=PLOTLY_CONFIG)
-
-    with status_col:
-        progress_dist = tracking_student.get("progress_student", pd.Series(dtype=str)).value_counts().head(12)
-        progress_df = progress_dist.rename_axis("Status").reset_index(name="Jumlah").sort_values("Jumlah")
-        status_fig = px.bar(progress_df, x="Jumlah", y="Status", orientation="h")
-        status_fig.update_traces(
-            marker_color=[
-                CHART_COLORS[6] if status == "Placement"
-                else CHART_COLORS[2] if status == "Rejected"
-                else CHART_COLORS[4] if status == "Ghosting"
-                else CHART_COLORS[i % len(CHART_COLORS)]
-                for i, status in enumerate(progress_df["Status"])
-            ],
-            hovertemplate="%{y}: %{x:,.0f}<extra></extra>",
-        )
-        style_figure(status_fig, 470)
-        status_fig.update_layout(xaxis_title=None, yaxis_title=None)
-        st.plotly_chart(status_fig, use_container_width=True, config=PLOTLY_CONFIG)
-
-    # Bottleneck insight based on the largest loss between adjacent displayed stages.
-    losses = []
-    for first, second in zip(funnel_order[:-1], funnel_order[1:]):
-        losses.append((first, second, int(funnel_counts[first] - funnel_counts[second])))
-    losses = sorted(losses, key=lambda item: item[2], reverse=True)
-    if losses:
-        first, second, loss = losses[0]
-        insight_card(
-            "Potensi bottleneck terbesar",
-            f"Selisih volume terbesar pada corong berada antara {first} dan {second}, sebanyak {format_int(max(loss, 0))} rekam proses.",
-            "BOTTLENECK",
-            icon_key="bottleneck",
-        )
-
-    # -------------------------------------------------------------------------
-    # Early warning system
-    # -------------------------------------------------------------------------
-    section_header(
-        "Monitoring Respons dan Tindak Lanjut",
-        "Memantau proses seleksi yang belum memperoleh pembaruan dan menentukan prioritas follow-up berdasarkan tahap, perusahaan, serta lama menunggu.",
-        "BT-05 · RESPONSE MONITORING",
-    )
-
-    active_stages = [
-        "Selecting Student by Company",
-        "CDC Briefing Student",
-        "Study Case",
-        "Interview User",
-        "Final Interview",
-        "FU 1",
-        "FU 2",
-        "FU 3",
-    ]
-
-    # Use the placement mart so the monitoring table can also access request metadata.
-    ews = placement_mart[placement_mart.get("progress_student", "").isin(active_stages)].copy()
+    ews = placement_mart[
+        placement_mart.get("progress_student", "").isin(ACTIVE_STAGES)
+    ].copy()
     if "jenis_penempatan" not in ews.columns and "id_talent_req" in ews.columns:
         ews = ews.merge(
-            talent_request[["id_talent_req", "jenis_penempatan"]].drop_duplicates("id_talent_req"),
+            talent_request[
+                ["id_talent_req", "jenis_penempatan"]
+            ].drop_duplicates("id_talent_req"),
             on="id_talent_req",
             how="left",
         )
 
-    ews["days_idle"] = (AS_OF - pd.to_datetime(ews["last_update"], errors="coerce")).dt.days.clip(lower=0)
-    ews["base_sla"] = np.where(ews["progress_student"].eq("Final Interview"), 14, 7)
-    ews["days_over_sla"] = (ews["days_idle"] - ews["base_sla"]).fillna(0).astype(int)
+    ews["days_idle"] = (
+        AS_OF - pd.to_datetime(ews["last_update"], errors="coerce")
+    ).dt.days.clip(lower=0)
+    ews["base_sla"] = np.where(
+        ews["progress_student"].eq("Final Interview"), 14, 7
+    )
+    ews["days_over_sla"] = (
+        ews["days_idle"] - ews["base_sla"]
+    ).fillna(0).astype(int)
     ews["is_overdue"] = ews["days_over_sla"] > 0
     ews["duration_bucket"] = np.select(
         [
@@ -1823,8 +2366,13 @@ else:
             ews["days_over_sla"].between(8, 30),
             ews["days_over_sla"].between(31, 90),
         ],
-        ["Dalam SLA", "Lewat 1–7 hari", "Lewat 8–30 hari", "Lewat 31–90 hari"],
-        default="Lewat >90 hari",
+        [
+            "Dalam batas waktu",
+            "1–7 hari",
+            "8–30 hari",
+            "31–90 hari",
+        ],
+        default=">90 hari",
     )
     ews["priority"] = np.select(
         [
@@ -1834,316 +2382,623 @@ else:
             ews["days_over_sla"] > 0,
         ],
         ["Segera", "Tinggi", "Menengah", "Pantau"],
-        default="Dalam SLA",
+        default="Dalam batas waktu",
     )
 
     total_active_processes = int(len(ews))
     overdue = ews[ews["is_overdue"]].copy()
     overdue_count = int(len(overdue))
     overdue_rate = safe_divide(overdue_count, total_active_processes) * 100
-    median_wait = int(round(overdue["days_idle"].median())) if not overdue.empty else 0
-
+    median_wait = (
+        int(round(overdue["days_idle"].median())) if not overdue.empty else 0
+    )
     overdue_by_stage = overdue["progress_student"].value_counts()
-    stalled_stage = str(overdue_by_stage.index[0]) if not overdue_by_stage.empty else "Belum ada"
-    stalled_stage_count = int(overdue_by_stage.iloc[0]) if not overdue_by_stage.empty else 0
-    stalled_stage_short = stalled_stage if len(stalled_stage) <= 20 else stalled_stage[:18].rstrip() + "…"
-
-    company_series = overdue.get("company", overdue.get("company_name", pd.Series(dtype=str)))
+    stalled_stage = (
+        str(overdue_by_stage.index[0]) if not overdue_by_stage.empty else "Belum ada"
+    )
+    stalled_stage_count = (
+        int(overdue_by_stage.iloc[0]) if not overdue_by_stage.empty else 0
+    )
+    company_column = "company" if "company" in ews.columns else "company_name"
+    company_series = overdue.get(company_column, pd.Series(dtype=str))
     affected_companies = int(company_series.dropna().astype(str).nunique())
 
-    m1, m2, m3, m4 = st.columns(4, gap="large")
-    with m1:
-        kpi_card(
-            "Lewat SLA",
-            format_int(overdue_count),
-            f"{format_pct(overdue_rate)} dari proses aktif",
-            "overdue",
+    if operations_section == "pipeline":
+        section_header(
+            "Tahapan Proses Seleksi",
+            "Jumlah proses pada setiap tahap saat ini. Angka ini bukan tingkat kelulusan antartahap.",
+            "TAHAP SELEKSI",
+            "section_operations_pipeline",
         )
-    with m2:
-        kpi_card(
-            "Median Tunggu",
-            f"{format_int(median_wait)} hari",
-            "Sejak pembaruan terakhir",
-            "median_wait",
-        )
-    with m3:
-        kpi_card(
-            "Tahap Tertahan",
-            stalled_stage_short,
-            f"{format_int(stalled_stage_count)} proses melewati SLA",
-            "stage_stalled",
-            value_kind="text",
-        )
-    with m4:
-        kpi_card(
-            "Perusahaan Terdampak",
-            format_int(affected_companies),
-            "Memiliki minimal satu proses terlambat",
-            "affected_companies",
-        )
+        funnel_col, status_col = st.columns([1.0, 1.0], gap="large")
+        with funnel_col:
+            st.markdown(
+                '<div class="chart-panel-label">Sebaran Tahap Utama</div>',
+                unsafe_allow_html=True,
+            )
+            funnel_fig = go.Figure(
+                go.Funnel(
+                    y=funnel_df["Tahap Tampilan"],
+                    x=funnel_df["Kandidat"],
+                    textinfo="value",
+                    marker={
+                        "color": [
+                            CHART_COLORS[5],
+                            CHART_COLORS[0],
+                            CHART_COLORS[1],
+                            CHART_COLORS[3],
+                            CHART_COLORS[2],
+                            CHART_COLORS[6],
+                        ]
+                    },
+                    connector={"line": {"color": "#7A8A99", "width": 1.1}},
+                )
+            )
+            style_figure(funnel_fig, 500)
+            st.plotly_chart(
+                funnel_fig,
+                use_container_width=True,
+                config=PLOTLY_CONFIG,
+            )
 
-    st.markdown('<div style="height:24px;"></div>', unsafe_allow_html=True)
-
-    progress_col, stage_chart_col = st.columns([1.15, 1.0], gap="large")
-    with progress_col:
-        response_progress_card(overdue_count, total_active_processes, overdue_rate)
-
-    with stage_chart_col:
-        st.markdown('<div class="chart-panel-label">Proses terlambat per tahap</div>', unsafe_allow_html=True)
-        stage_delay_df = (
-            overdue.groupby("progress_student", dropna=False)
-            .size()
-            .rename("Jumlah")
-            .reset_index()
-            .rename(columns={"progress_student": "Tahap"})
-            .sort_values("Jumlah")
-        )
-        if stage_delay_df.empty:
-            st.info("Belum ada proses yang melewati SLA.")
-        else:
-            stage_delay_fig = px.bar(
-                stage_delay_df,
+        with status_col:
+            st.markdown(
+                '<div class="chart-panel-label">Seluruh Status Proses</div>',
+                unsafe_allow_html=True,
+            )
+            progress_dist = (
+                tracking_student.get("progress_student", pd.Series(dtype=str))
+                .value_counts()
+                .head(12)
+            )
+            progress_df = (
+                progress_dist.rename_axis("Status")
+                .reset_index(name="Jumlah")
+                .sort_values("Jumlah")
+            )
+            progress_df["Status Tampilan"] = progress_df["Status"].map(stage_label)
+            status_fig = px.bar(
+                progress_df,
                 x="Jumlah",
-                y="Tahap",
+                y="Status Tampilan",
                 orientation="h",
                 text="Jumlah",
             )
-            stage_delay_fig.update_traces(
+            status_fig.update_traces(
                 marker_color=[
-                    CHART_COLORS[(index + 1) % len(CHART_COLORS)]
-                    for index in range(len(stage_delay_df))
+                    CHART_COLORS[6]
+                    if status == "Placement"
+                    else CHART_COLORS[2]
+                    if status == "Rejected"
+                    else CHART_COLORS[4]
+                    if status == "Ghosting"
+                    else CHART_COLORS[i % len(CHART_COLORS)]
+                    for i, status in enumerate(progress_df["Status"])
                 ],
                 textposition="outside",
-                hovertemplate="<b>%{y}</b><br>Lewat SLA: %{x:,.0f}<extra></extra>",
+                hovertemplate="%{y}: %{x:,.0f}<extra></extra>",
             )
-            style_figure(stage_delay_fig, 245)
-            stage_delay_fig.update_layout(xaxis_title=None, yaxis_title=None, margin={"l": 10, "r": 28, "t": 8, "b": 8})
-            st.plotly_chart(stage_delay_fig, use_container_width=True, config=PLOTLY_CONFIG)
+            style_figure(status_fig, 500)
+            status_fig.update_layout(
+                xaxis_title=None,
+                yaxis_title=None,
+                margin={"l": 8, "r": 30, "t": 8, "b": 15},
+            )
+            st.plotly_chart(
+                status_fig,
+                use_container_width=True,
+                config=PLOTLY_CONFIG,
+            )
 
-    st.markdown('<div style="height:20px;"></div>', unsafe_allow_html=True)
-    st.markdown('<div class="card-title">Filter tabel prioritas tindak lanjut</div>', unsafe_allow_html=True)
+        losses = [
+            (first, second, int(funnel_counts[first] - funnel_counts[second]))
+            for first, second in zip(funnel_order[:-1], funnel_order[1:])
+        ]
+        losses = sorted(losses, key=lambda item: item[2], reverse=True)
+        if losses:
+            first, second, loss = losses[0]
+            insight_card(
+                "Perbedaan volume terbesar",
+                (
+                    f"Selisih terbesar berada antara {stage_label(first)} dan "
+                    f"{stage_label(second)}, yaitu {format_int(max(loss, 0))} proses."
+                ),
+                "PERHATIAN",
+                icon_key="bottleneck",
+            )
 
-    filter1, filter2, filter3, filter4 = st.columns([1.15, 1.0, 1.0, 1.0], gap="medium")
-    company_column = "company" if "company" in ews.columns else "company_name"
-    company_options = sorted(ews.get(company_column, pd.Series(dtype=str)).dropna().astype(str).unique().tolist())
-    placement_options = sorted(ews.get("jenis_penempatan", pd.Series(dtype=str)).dropna().astype(str).unique().tolist())
-
-    with filter1:
-        company_filter = st.selectbox("Perusahaan", ["Semua perusahaan"] + company_options)
-    with filter2:
-        stage_filter = st.selectbox("Tahap", ["Semua tahap"] + active_stages)
-    with filter3:
-        duration_filter = st.selectbox(
-            "Durasi menunggu",
-            ["Semua durasi", "Dalam SLA", "Lewat 1–7 hari", "Lewat 8–30 hari", "Lewat 31–90 hari", "Lewat >90 hari"],
+    elif operations_section == "delays":
+        section_header(
+            "Respons dan Tindak Lanjut",
+            "Lihat jumlah proses terlambat, lama keterlambatan, dan tahap yang paling perlu diperhatikan.",
+            "TINDAK LANJUT",
+            "section_operations_delays",
         )
-    with filter4:
-        placement_filter_ews = st.selectbox("Jenis penempatan", ["Semua jenis"] + placement_options)
+        m1, m2, m3, m4 = st.columns(4, gap="large")
+        with m1:
+            kpi_card(
+                "Melewati Batas Waktu",
+                format_int(overdue_count),
+                f"{format_pct(overdue_rate)} dari proses aktif",
+                "overdue",
+            )
+        with m2:
+            kpi_card(
+                "Waktu Tunggu Tipikal",
+                f"{format_int(median_wait)} hari",
+                "Nilai tengah sejak pembaruan terakhir",
+                "median_wait",
+            )
+        with m3:
+            kpi_card(
+                "Tahap Paling Tertahan",
+                stage_label(stalled_stage),
+                f"{format_int(stalled_stage_count)} proses terlambat",
+                "stage_stalled",
+                value_kind="text",
+            )
+        with m4:
+            kpi_card(
+                "Perusahaan Perlu Dihubungi",
+                format_int(affected_companies),
+                "Memiliki minimal satu proses terlambat",
+                "affected_companies",
+            )
 
-    ews_view = ews.copy()
-    if company_filter != "Semua perusahaan":
-        ews_view = ews_view[ews_view[company_column].astype(str).eq(company_filter)]
-    if stage_filter != "Semua tahap":
-        ews_view = ews_view[ews_view["progress_student"].eq(stage_filter)]
-    if duration_filter != "Semua durasi":
-        ews_view = ews_view[ews_view["duration_bucket"].eq(duration_filter)]
-    if placement_filter_ews != "Semua jenis" and "jenis_penempatan" in ews_view.columns:
-        ews_view = ews_view[ews_view["jenis_penempatan"].astype(str).eq(placement_filter_ews)]
+        st.markdown('<div style="height:12px;"></div>', unsafe_allow_html=True)
+        aging_col, stage_col = st.columns([1.02, 0.98], gap="large")
 
-    priority_order = pd.CategoricalDtype(["Segera", "Tinggi", "Menengah", "Pantau", "Dalam SLA"], ordered=True)
-    ews_view["priority"] = ews_view["priority"].astype(priority_order)
-    ews_view = ews_view.sort_values(["priority", "days_idle"], ascending=[True, False]).head(200)
-    ews_view["priority"] = ews_view["priority"].astype(str)
+        with aging_col:
+            st.markdown(
+                '<div class="chart-panel-label">Lama Keterlambatan</div>',
+                unsafe_allow_html=True,
+            )
+            aging_order = ["1–7 hari", "8–30 hari", "31–90 hari", ">90 hari"]
+            aging_colors = {
+                "1–7 hari": "#7FA6E8",
+                "8–30 hari": "#A18BE0",
+                "31–90 hari": "#E7B75F",
+                ">90 hari": "#E99082",
+            }
+            aging_counts = (
+                overdue["duration_bucket"]
+                .value_counts()
+                .reindex(aging_order)
+                .fillna(0)
+                .astype(int)
+            )
+            aging_total = int(aging_counts.sum())
+            aging_fig = go.Figure()
+            for bucket in aging_order:
+                count = int(aging_counts[bucket])
+                percentage = safe_divide(count, aging_total) * 100
+                aging_fig.add_trace(
+                    go.Bar(
+                        y=["Proses terlambat"],
+                        x=[count],
+                        name=bucket,
+                        orientation="h",
+                        marker_color=aging_colors[bucket],
+                        text=[
+                            f"{format_int(count)}<br>{percentage:.1f}%"
+                            if count > 0
+                            else ""
+                        ],
+                        textposition="inside",
+                        insidetextanchor="middle",
+                        hovertemplate=(
+                            f"<b>{bucket}</b><br>Jumlah: %{{x:,.0f}}"
+                            f"<br>Bagian: {percentage:.1f}%<extra></extra>"
+                        ),
+                    )
+                )
+            style_figure(aging_fig, 315)
+            aging_fig.update_layout(
+                barmode="stack",
+                xaxis_title="Jumlah proses",
+                yaxis_title=None,
+                legend={
+                    "orientation": "h",
+                    "yanchor": "bottom",
+                    "y": 1.03,
+                    "xanchor": "left",
+                    "x": 0,
+                    "font": {"size": 11},
+                },
+                margin={"l": 15, "r": 15, "t": 55, "b": 30},
+            )
+            aging_fig.update_yaxes(showticklabels=False)
+            st.plotly_chart(
+                aging_fig,
+                use_container_width=True,
+                config=PLOTLY_CONFIG,
+            )
 
-    # Bring in WhatsApp numbers so the follow-up table can offer a one-click WA action.
-    wa_lookup = (
-        status_student.sort_values("sync_date", na_position="first")
-        .drop_duplicates("NIM", keep="last")[["NIM", "no_whatsapp"]]
-        .copy()
-    )
-    wa_lookup["NIM"] = wa_lookup["NIM"].astype(str)
-    ews_view["NIM"] = ews_view["NIM"].astype(str)
-    ews_view = ews_view.merge(wa_lookup, on="NIM", how="left")
+        with stage_col:
+            st.markdown(
+                '<div class="chart-panel-label">Proses Terlambat per Tahap</div>',
+                unsafe_allow_html=True,
+            )
+            stage_delay_df = (
+                overdue.groupby("progress_student", dropna=False)
+                .size()
+                .rename("Jumlah")
+                .reset_index()
+                .rename(columns={"progress_student": "Tahap"})
+                .sort_values("Jumlah")
+            )
+            stage_delay_df["Tahap Tampilan"] = stage_delay_df["Tahap"].map(stage_label)
+            if stage_delay_df.empty:
+                st.info("Belum ada proses yang melewati batas waktu.")
+            else:
+                stage_delay_fig = px.bar(
+                    stage_delay_df,
+                    x="Jumlah",
+                    y="Tahap Tampilan",
+                    orientation="h",
+                    text="Jumlah",
+                )
+                stage_delay_fig.update_traces(
+                    marker_color=[
+                        CHART_COLORS[(index + 1) % len(CHART_COLORS)]
+                        for index in range(len(stage_delay_df))
+                    ],
+                    textposition="outside",
+                    hovertemplate="<b>%{y}</b><br>Jumlah: %{x:,.0f}<extra></extra>",
+                )
+                style_figure(stage_delay_fig, 315)
+                stage_delay_fig.update_layout(
+                    xaxis_title="Jumlah proses",
+                    yaxis_title=None,
+                    margin={"l": 10, "r": 28, "t": 8, "b": 30},
+                )
+                st.plotly_chart(
+                    stage_delay_fig,
+                    use_container_width=True,
+                    config=PLOTLY_CONFIG,
+                )
 
-    display_columns = [
-        "NIM",
-        "student_name",
-        "position",
-        company_column,
-        "progress_student",
-        "last_update",
-        "days_idle",
-        "priority",
-        "no_whatsapp",
-    ]
-    if "jenis_penempatan" in ews_view.columns:
-        display_columns.insert(5, "jenis_penempatan")
+    elif operations_section == "followup":
+        section_header(
+            "Daftar Tindak Lanjut",
+            "Saring proses yang perlu dihubungi, lalu gunakan tombol WhatsApp untuk meminta pembaruan.",
+            "PRIORITAS",
+            "section_operations_followup",
+        )
+        company_options = sorted(
+            ews.get(company_column, pd.Series(dtype=str))
+            .dropna()
+            .astype(str)
+            .unique()
+            .tolist()
+        )
+        placement_options = sorted(
+            ews.get("jenis_penempatan", pd.Series(dtype=str))
+            .dropna()
+            .astype(str)
+            .unique()
+            .tolist()
+        )
+        filter1, filter2, filter3, filter4 = st.columns(
+            [1.15, 1.0, 1.0, 1.0], gap="medium"
+        )
+        with filter1:
+            company_filter = st.selectbox(
+                "Perusahaan", ["Semua perusahaan"] + company_options
+            )
+        with filter2:
+            stage_filter = st.selectbox(
+                "Tahap",
+                ["Semua tahap"] + ACTIVE_STAGES,
+                format_func=lambda value: (
+                    value if value == "Semua tahap" else stage_label(value)
+                ),
+            )
+        with filter3:
+            duration_filter = st.selectbox(
+                "Lama keterlambatan",
+                [
+                    "Semua durasi",
+                    "Dalam batas waktu",
+                    "1–7 hari",
+                    "8–30 hari",
+                    "31–90 hari",
+                    ">90 hari",
+                ],
+            )
+        with filter4:
+            placement_filter_ews = st.selectbox(
+                "Jenis kesempatan",
+                ["Semua jenis"] + placement_options,
+            )
 
-    ews_display = ews_view[display_columns].copy()
+        ews_view = ews.copy()
+        if company_filter != "Semua perusahaan":
+            ews_view = ews_view[
+                ews_view[company_column].astype(str).eq(company_filter)
+            ]
+        if stage_filter != "Semua tahap":
+            ews_view = ews_view[
+                ews_view["progress_student"].eq(stage_filter)
+            ]
+        if duration_filter != "Semua durasi":
+            ews_view = ews_view[
+                ews_view["duration_bucket"].eq(duration_filter)
+            ]
+        if (
+            placement_filter_ews != "Semua jenis"
+            and "jenis_penempatan" in ews_view.columns
+        ):
+            ews_view = ews_view[
+                ews_view["jenis_penempatan"]
+                .astype(str)
+                .eq(placement_filter_ews)
+            ]
 
-    # Build the WA quick-action link from the raw (unmasked) data first.
-    ews_display["wa_followup_link"] = [
-        wa_followup_link(row["no_whatsapp"], row["student_name"], row[company_column], row["progress_student"])
-        for _, row in ews_display.iterrows()
-    ]
-    ews_display = ews_display.drop(columns=["no_whatsapp"])
+        priority_order = pd.CategoricalDtype(
+            ["Segera", "Tinggi", "Menengah", "Pantau", "Dalam batas waktu"],
+            ordered=True,
+        )
+        ews_view["priority"] = ews_view["priority"].astype(priority_order)
+        ews_view = ews_view.sort_values(
+            ["priority", "days_idle"], ascending=[True, False]
+        ).head(120)
+        ews_view["priority"] = ews_view["priority"].astype(str)
 
-    if IS_PUBLIC:
-        ews_display["student_name"] = ews_display["student_name"].map(mask_name)
-        ews_display["NIM"] = ews_display["NIM"].map(mask_nim)
+        wa_lookup = (
+            status_student.sort_values("sync_date", na_position="first")
+            .drop_duplicates("NIM", keep="last")[["NIM", "no_whatsapp"]]
+            .copy()
+        )
+        wa_lookup["NIM"] = wa_lookup["NIM"].astype(str)
+        ews_view["NIM"] = ews_view["NIM"].astype(str)
+        ews_view = ews_view.merge(wa_lookup, on="NIM", how="left")
 
-    rename_columns = {
-        "student_name": "Mahasiswa",
-        "position": "Posisi",
-        company_column: "Perusahaan",
-        "progress_student": "Tahap",
-        "jenis_penempatan": "Jenis Penempatan",
-        "last_update": "Pembaruan Terakhir",
-        "days_idle": "Hari Menunggu",
-        "priority": "Prioritas",
-    }
-    ews_display = ews_display.rename(columns=rename_columns)
+        display_columns = [
+            "NIM",
+            "student_name",
+            "position",
+            company_column,
+            "progress_student",
+            "last_update",
+            "days_idle",
+            "priority",
+            "no_whatsapp",
+        ]
+        if "jenis_penempatan" in ews_view.columns:
+            display_columns.insert(5, "jenis_penempatan")
+        ews_display = ews_view[display_columns].copy()
+        ews_display["stage_display"] = ews_display["progress_student"].map(stage_label)
+        ews_display["wa_followup_link"] = [
+            wa_followup_link(
+                row["no_whatsapp"],
+                row["student_name"],
+                row[company_column],
+                stage_label(row["progress_student"]),
+            )
+            for _, row in ews_display.iterrows()
+        ]
+        ews_display = ews_display.drop(
+            columns=["no_whatsapp", "progress_student"]
+        )
+        if IS_PUBLIC:
+            ews_display["student_name"] = ews_display["student_name"].map(mask_name)
+            ews_display["NIM"] = ews_display["NIM"].map(mask_nim)
 
-    st.markdown('<div class="card-title" style="margin:18px 0 9px;">Tabel Prioritas Tindak Lanjut</div>', unsafe_allow_html=True)
-
-    if ews_display.empty:
-        st.info("Tidak ada proses yang sesuai dengan filter saat ini.")
-    else:
-        priority_colors = {
-            "Segera": "#E5484D",
-            "Tinggi": "#F2994A",
-            "Menengah": "#F2C94C",
-            "Pantau": "#56CCF2",
-            "Dalam SLA": "#27AE60",
+        rename_columns = {
+            "student_name": "Mahasiswa",
+            "position": "Posisi",
+            company_column: "Perusahaan",
+            "stage_display": "Tahap",
+            "jenis_penempatan": "Jenis Kesempatan",
+            "last_update": "Pembaruan Terakhir",
+            "days_idle": "Hari Menunggu",
+            "priority": "Prioritas",
         }
-        chat_icon_uri = asset_data_uri(ICON_PATHS["chat"])
-        chat_icon_html = f"<img src='{chat_icon_uri}' alt='WA'/>" if chat_icon_uri else "💬"
-        table_columns = [column for column in ews_display.columns if column != "wa_followup_link"]
+        ews_display = ews_display.rename(columns=rename_columns)
 
-        header_html = "".join(f"<th>{html.escape(str(col))}</th>" for col in table_columns)
-        header_html += "<th>Follow up</th>"
+        if ews_display.empty:
+            st.info("Tidak ada proses yang sesuai dengan pilihan saat ini.")
+        else:
+            priority_colors = {
+                "Segera": "#E5484D",
+                "Tinggi": "#F2994A",
+                "Menengah": "#D9A72B",
+                "Pantau": "#4299B8",
+                "Dalam batas waktu": "#27AE60",
+            }
+            # Gunakan emoji percakapan agar tombol lebih ringan, konsisten,
+            # dan tidak bergantung pada file ikon eksternal.
+            chat_icon_html = "<span class='ews-wa-emoji' aria-hidden='true'>💬</span>"
+            table_columns = [
+                column
+                for column in ews_display.columns
+                if column != "wa_followup_link"
+            ]
+            header_html = "".join(
+                f"<th>{html.escape(str(col))}</th>" for col in table_columns
+            )
+            header_html += "<th>Hubungi</th>"
 
-        rows_html = []
-        for _, row in ews_display.iterrows():
-            cells = []
-            for col in table_columns:
-                value = row[col]
-                if col == "Pembaruan Terakhir" and pd.notna(value):
-                    cells.append(f"<td>{pd.to_datetime(value).strftime('%d %b %Y')}</td>")
-                elif col == "Hari Menunggu" and pd.notna(value):
-                    cells.append(f"<td class='ews-num'>{format_int(value)} hari</td>")
-                elif col == "Prioritas":
-                    color = priority_colors.get(str(value), "#8FA3B0")
+            rows_html = []
+            for _, row in ews_display.iterrows():
+                cells = []
+                for col in table_columns:
+                    value = row[col]
+                    if col == "Pembaruan Terakhir" and pd.notna(value):
+                        cells.append(
+                            f"<td>{pd.to_datetime(value).strftime('%d %b %Y')}</td>"
+                        )
+                    elif col == "Hari Menunggu" and pd.notna(value):
+                        cells.append(
+                            f"<td class='ews-num'>{format_int(value)} hari</td>"
+                        )
+                    elif col == "Prioritas":
+                        color = priority_colors.get(str(value), "#8FA3B0")
+                        cells.append(
+                            f"<td><span class='ews-badge' "
+                            f"style='background:{color}22;color:{color};'>"
+                            f"{html.escape(str(value))}</span></td>"
+                        )
+                    else:
+                        shown = (
+                            html.escape(str(value))
+                            if pd.notna(value) and str(value).strip()
+                            else "-"
+                        )
+                        cells.append(f"<td>{shown}</td>")
+
+                wa_link = row["wa_followup_link"]
+                if pd.notna(wa_link):
                     cells.append(
-                        f"<td><span class='ews-badge' style='background:{color}22;color:{color};'>"
-                        f"{html.escape(str(value))}</span></td>"
+                        f"<td><a class='ews-wa-btn' href='{wa_link}' "
+                        f"target='_blank'>{chat_icon_html} WhatsApp</a></td>"
                     )
                 else:
-                    text = html.escape(str(value)) if pd.notna(value) and str(value).strip() else "-"
-                    cells.append(f"<td>{text}</td>")
+                    cells.append(
+                        f"<td><span class='ews-wa-btn ews-wa-btn--disabled'>"
+                        f"{chat_icon_html} WhatsApp</span></td>"
+                    )
+                rows_html.append(f"<tr>{''.join(cells)}</tr>")
 
-            wa_link = row["wa_followup_link"]
-            if pd.notna(wa_link):
-                cells.append(
-                    f"<td><a class='ews-wa-btn' href='{wa_link}' target='_blank'>{chat_icon_html} WA</a></td>"
-                )
-            else:
-                cells.append(
-                    f"<td><span class='ews-wa-btn ews-wa-btn--disabled'>{chat_icon_html} WA</span></td>"
-                )
+            table_html = f"""
+            <style>
+            .ews-table-wrap {{
+                max-height: 510px; overflow: auto; border-radius: 18px;
+                border: 1px solid #CFE7E2; background: #FFFFFF;
+                box-shadow: 0 18px 42px rgba(28,94,88,.13);
+                scrollbar-color: #A9D8D1 #F3FAF8;
+                scrollbar-width: thin;
+            }}
+            .ews-table-wrap::-webkit-scrollbar {{ width: 10px; height: 10px; }}
+            .ews-table-wrap::-webkit-scrollbar-track {{ background: #F3FAF8; }}
+            .ews-table-wrap::-webkit-scrollbar-thumb {{
+                background: #A9D8D1; border-radius: 999px; border: 2px solid #F3FAF8;
+            }}
+            .ews-table {{
+                width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px;
+                font-family: {FONT_BODY}; color: #153B39; white-space: nowrap;
+                background: #FFFFFF;
+            }}
+            .ews-table thead th {{
+                position: sticky; top: 0; z-index: 2;
+                background: #EAF7F4; color: #0C706B; text-align: left;
+                font-size: 10.8px; font-weight: 750; letter-spacing: .2px;
+                padding: 12px 13px; border-bottom: 1px solid #CFE7E2;
+                box-shadow: 0 1px 0 rgba(20,112,107,.06);
+            }}
+            .ews-table thead th:first-child {{ border-top-left-radius: 17px; }}
+            .ews-table thead th:last-child {{ border-top-right-radius: 17px; }}
+            .ews-table tbody td {{
+                padding: 10px 13px; background: #FFFFFF;
+                border-bottom: 1px solid #E5F0EE; color: #234D49;
+                transition: background-color .16s ease, color .16s ease;
+            }}
+            .ews-table tbody tr:nth-child(even) td {{ background: #FBFEFD; }}
+            .ews-table tbody tr:hover td {{
+                background: #DDF5F1 !important; color: #0B5F5A;
+            }}
+            .ews-table tbody tr:hover {{ cursor: default; }}
+            .ews-table tbody tr:last-child td {{ border-bottom: 0; }}
+            .ews-table .ews-num {{
+                text-align: right; font-family: {FONT_MONO}; color: #0C706B;
+            }}
+            .ews-badge {{
+                display: inline-flex; align-items: center;
+                padding: 4px 9px; border-radius: 999px; font-size: 10.7px; font-weight: 750;
+            }}
+            .ews-wa-btn {{
+                display: inline-flex !important; align-items: center; justify-content: center;
+                gap: 6px; min-width: 102px; padding: 7px 12px; border-radius: 10px;
+                border: 1px solid rgba(16,140,79,.12); font-size: 11.5px;
+                font-weight: 750 !important; text-decoration: none !important;
+                color: #FFFFFF !important;
+                background: linear-gradient(135deg, #26C66C, #169C55);
+                box-shadow: 0 7px 15px rgba(22,156,85,.18);
+                transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+            }}
+            .ews-wa-btn:hover {{
+                transform: translateY(-1px); filter: brightness(1.03);
+                box-shadow: 0 10px 20px rgba(22,156,85,.24);
+            }}
+            .ews-wa-emoji {{
+                display: inline-flex; align-items: center; justify-content: center;
+                font-size: 14px; line-height: 1;
+            }}
+            .ews-wa-btn--disabled {{
+                background: #EDF3F2; color: #91A5A2 !important;
+                border-color: #DFE9E7; box-shadow: none;
+            }}
+            .ews-wa-btn--disabled:hover {{ transform: none; filter: none; box-shadow: none; }}
+            </style>
+            <div class="ews-table-wrap">
+              <table class="ews-table">
+                <thead><tr>{header_html}</tr></thead>
+                <tbody>{''.join(rows_html)}</tbody>
+              </table>
+            </div>
+            """
+            st.markdown(table_html, unsafe_allow_html=True)
 
-            rows_html.append(f"<tr>{''.join(cells)}</tr>")
-
-        table_html = f"""
-        <style>
-        .ews-table-wrap {{
-            max-height: 560px; overflow-y: auto; border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.08); background: #0B1220;
-        }}
-        .ews-table {{
-            width: 100%; border-collapse: collapse; font-size: 13px;
-            font-family: {FONT_BODY}; color: #E7ECF2; white-space: nowrap;
-        }}
-        .ews-table thead th {{
-            position: sticky; top: 0; z-index: 1;
-            background: #141C2E; color: #9FB0C0; text-align: left;
-            font-size: 11.5px; font-weight: 700; text-transform: none;
-            padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.10);
-        }}
-        .ews-table tbody td {{
-            padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);
-        }}
-        .ews-table tbody tr:hover td {{ background: rgba(255,255,255,0.03); }}
-        .ews-table .ews-num {{ text-align: right; font-family: {FONT_MONO}; }}
-        .ews-badge {{
-            padding: 3px 10px; border-radius: 8px; font-size: 12px; font-weight: 700;
-        }}
-        .ews-wa-btn {{
-            display: inline-flex !important; align-items: center; justify-content: center;
-            gap: 6px; padding: 6px 14px; border-radius: 9px; font-size: 12.5px;
-            font-weight: 700 !important; text-decoration: none !important; color: #FFFFFF !important;
-            background: linear-gradient(180deg, #29CB6B, #1FA85A);
-            border: 1px solid rgba(255,255,255,0.15); line-height: 1;
-        }}
-        .ews-wa-btn:visited, .ews-wa-btn:hover, .ews-wa-btn:active {{
-            color: #FFFFFF !important; text-decoration: none !important;
-        }}
-        .ews-wa-btn img {{
-            width: 15px; height: 15px; object-fit: contain; border-radius: 5px;
-            pointer-events: none;
-        }}
-        .ews-wa-btn:hover {{ filter: brightness(1.08); }}
-        .ews-wa-btn--disabled {{
-            background: rgba(255,255,255,0.06); color: #6B7A88 !important; cursor: not-allowed;
-            border: 1px solid rgba(255,255,255,0.08);
-        }}
-        </style>
-        <div class="ews-table-wrap">
-          <table class="ews-table">
-            <thead><tr>{header_html}</tr></thead>
-            <tbody>{''.join(rows_html)}</tbody>
-          </table>
-        </div>
-        """
-        st.markdown(table_html, unsafe_allow_html=True)
-
-    # Rejection reason chart enriches the operational diagnosis.
-    section_header(
-        "Diagnosis Outcome Seleksi",
-        "Alasan penolakan dan ghosting membantu CDC menentukan intervensi yang paling relevan.",
-        "OPERATIONAL INSIGHT",
-    )
-    rejection_counts = (
-        tracking_student.get("rejection", pd.Series(dtype=str))
-        .replace("On Progress", np.nan)
-        .dropna()
-        .value_counts()
-        .rename_axis("Outcome")
-        .reset_index(name="Jumlah")
-    )
-    if not rejection_counts.empty:
-        rejection_fig = px.bar(rejection_counts.sort_values("Jumlah"), x="Jumlah", y="Outcome", orientation="h")
-        rejection_fig.update_traces(
-            marker_color=[
-                CHART_COLORS[6] if outcome == "Placement"
-                else CHART_COLORS[4] if outcome == "Ghosting"
-                else CHART_COLORS[(i + 1) % len(CHART_COLORS)]
-                for i, outcome in enumerate(rejection_counts.sort_values("Jumlah")["Outcome"])
-            ],
-            hovertemplate="%{y}: %{x:,.0f}<extra></extra>",
+    else:
+        section_header(
+            "Hasil Akhir Proses Seleksi",
+            "Lihat penempatan, penolakan, dan proses tanpa kabar untuk menentukan perbaikan berikutnya.",
+            "HASIL SELEKSI",
+            "section_operations_outcomes",
         )
-        style_figure(rejection_fig, 400)
-        rejection_fig.update_layout(xaxis_title=None, yaxis_title=None)
-        st.plotly_chart(rejection_fig, use_container_width=True, config=PLOTLY_CONFIG)
-
-
+        rejection_counts = (
+            tracking_student.get("rejection", pd.Series(dtype=str))
+            .replace("On Progress", np.nan)
+            .dropna()
+            .value_counts()
+            .rename_axis("Outcome")
+            .reset_index(name="Jumlah")
+        )
+        if rejection_counts.empty:
+            st.info("Belum ada hasil akhir seleksi yang dapat ditampilkan.")
+        else:
+            rejection_counts["Hasil"] = rejection_counts["Outcome"].map(
+                lambda value: OUTCOME_LABELS.get(str(value), str(value))
+            )
+            rejection_show = rejection_counts.sort_values("Jumlah")
+            rejection_fig = px.bar(
+                rejection_show,
+                x="Jumlah",
+                y="Hasil",
+                orientation="h",
+                text="Jumlah",
+            )
+            rejection_fig.update_traces(
+                marker_color=[
+                    CHART_COLORS[6]
+                    if outcome == "Placement"
+                    else CHART_COLORS[4]
+                    if outcome == "Ghosting"
+                    else CHART_COLORS[(i + 1) % len(CHART_COLORS)]
+                    for i, outcome in enumerate(rejection_show["Outcome"])
+                ],
+                textposition="outside",
+                hovertemplate="%{y}: %{x:,.0f}<extra></extra>",
+            )
+            style_figure(rejection_fig, 570)
+            rejection_fig.update_layout(
+                xaxis_title="Jumlah proses",
+                yaxis_title=None,
+                margin={"l": 15, "r": 35, "t": 12, "b": 35},
+            )
+            st.plotly_chart(
+                rejection_fig,
+                use_container_width=True,
+                config=PLOTLY_CONFIG,
+            )
 # =============================================================================
 # FOOTER
 # =============================================================================
 st.markdown(
     f"""
     <div class="hop-footer">
-      {html.escape(DASHBOARD_TITLE)} · Dashboard Analitis CDC · SSDC 2026 ·
+      {html.escape(DASHBOARD_TITLE)} · Dashboard Penempatan CDC · SSDC 2026 ·
       {html.escape(TEAM_NAME)} · {html.escape(PARTICIPANT_NUMBER)} · Data per {AS_OF.strftime('%d %B %Y')}
     </div>
     """,
