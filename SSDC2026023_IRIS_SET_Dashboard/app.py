@@ -38,6 +38,7 @@ import mimetypes
 import re
 from pathlib import Path
 from typing import Iterable
+from urllib.parse import quote
 
 import numpy as np
 import pandas as pd
@@ -67,6 +68,7 @@ ICON_PATHS = {
     # Brand
     "logo": "assets/logo.png",
     "favicon": "assets/logo.png",
+    "chat": "assets/chat2.png",
 
     # Navigation
     "nav_executive": "assets/nav/nav_executive.png",
@@ -687,6 +689,33 @@ def format_int(value: float | int) -> str:
 
 def format_pct(value: float) -> str:
     return f"{value:.1f}%"
+
+
+def normalize_wa_number(value: object) -> str | None:
+    """Normalize an Indonesian phone number into wa.me-compatible digits (62xxxxxxxxx)."""
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return None
+    digits = re.sub(r"\D", "", str(value))
+    if not digits:
+        return None
+    if digits.startswith("0"):
+        digits = "62" + digits[1:]
+    elif digits.startswith("8"):
+        digits = "62" + digits
+    elif not digits.startswith("62"):
+        digits = "62" + digits
+    return digits
+
+
+def wa_followup_link(number: object, student_name: str, company: str, stage: str) -> float | str:
+    wa_number = normalize_wa_number(number)
+    if not wa_number:
+        return np.nan
+    message = (
+        f"Halo {student_name}, kami dari CDC ingin menanyakan perkembangan proses seleksi "
+        f"di {company} pada tahap {stage}. Mohon info terbarunya, terima kasih."
+    )
+    return f"https://wa.me/{wa_number}?text={quote(message)}"
 
 
 try:
@@ -1926,6 +1955,16 @@ else:
     ews_view = ews_view.sort_values(["priority", "days_idle"], ascending=[True, False]).head(200)
     ews_view["priority"] = ews_view["priority"].astype(str)
 
+    # Bring in WhatsApp numbers so the follow-up table can offer a one-click WA action.
+    wa_lookup = (
+        status_student.sort_values("sync_date", na_position="first")
+        .drop_duplicates("NIM", keep="last")[["NIM", "no_whatsapp"]]
+        .copy()
+    )
+    wa_lookup["NIM"] = wa_lookup["NIM"].astype(str)
+    ews_view["NIM"] = ews_view["NIM"].astype(str)
+    ews_view = ews_view.merge(wa_lookup, on="NIM", how="left")
+
     display_columns = [
         "NIM",
         "student_name",
@@ -1935,11 +1974,20 @@ else:
         "last_update",
         "days_idle",
         "priority",
+        "no_whatsapp",
     ]
     if "jenis_penempatan" in ews_view.columns:
         display_columns.insert(5, "jenis_penempatan")
 
     ews_display = ews_view[display_columns].copy()
+
+    # Build the WA quick-action link from the raw (unmasked) data first.
+    ews_display["wa_followup_link"] = [
+        wa_followup_link(row["no_whatsapp"], row["student_name"], row[company_column], row["progress_student"])
+        for _, row in ews_display.iterrows()
+    ]
+    ews_display = ews_display.drop(columns=["no_whatsapp"])
+
     if IS_PUBLIC:
         ews_display["student_name"] = ews_display["student_name"].map(mask_name)
         ews_display["NIM"] = ews_display["NIM"].map(mask_nim)
@@ -1957,15 +2005,107 @@ else:
     ews_display = ews_display.rename(columns=rename_columns)
 
     st.markdown('<div class="card-title" style="margin:18px 0 9px;">Tabel Prioritas Tindak Lanjut</div>', unsafe_allow_html=True)
-    st.dataframe(
-        ews_display,
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "Pembaruan Terakhir": st.column_config.DateColumn(format="DD MMM YYYY"),
-            "Hari Menunggu": st.column_config.NumberColumn(format="%d hari"),
-        },
-    )
+
+    if ews_display.empty:
+        st.info("Tidak ada proses yang sesuai dengan filter saat ini.")
+    else:
+        priority_colors = {
+            "Segera": "#E5484D",
+            "Tinggi": "#F2994A",
+            "Menengah": "#F2C94C",
+            "Pantau": "#56CCF2",
+            "Dalam SLA": "#27AE60",
+        }
+        chat_icon_uri = asset_data_uri(ICON_PATHS["chat"])
+        chat_icon_html = f"<img src='{chat_icon_uri}' alt='WA'/>" if chat_icon_uri else "💬"
+        table_columns = [column for column in ews_display.columns if column != "wa_followup_link"]
+
+        header_html = "".join(f"<th>{html.escape(str(col))}</th>" for col in table_columns)
+        header_html += "<th>Follow up</th>"
+
+        rows_html = []
+        for _, row in ews_display.iterrows():
+            cells = []
+            for col in table_columns:
+                value = row[col]
+                if col == "Pembaruan Terakhir" and pd.notna(value):
+                    cells.append(f"<td>{pd.to_datetime(value).strftime('%d %b %Y')}</td>")
+                elif col == "Hari Menunggu" and pd.notna(value):
+                    cells.append(f"<td class='ews-num'>{format_int(value)} hari</td>")
+                elif col == "Prioritas":
+                    color = priority_colors.get(str(value), "#8FA3B0")
+                    cells.append(
+                        f"<td><span class='ews-badge' style='background:{color}22;color:{color};'>"
+                        f"{html.escape(str(value))}</span></td>"
+                    )
+                else:
+                    text = html.escape(str(value)) if pd.notna(value) and str(value).strip() else "-"
+                    cells.append(f"<td>{text}</td>")
+
+            wa_link = row["wa_followup_link"]
+            if pd.notna(wa_link):
+                cells.append(
+                    f"<td><a class='ews-wa-btn' href='{wa_link}' target='_blank'>{chat_icon_html} WA</a></td>"
+                )
+            else:
+                cells.append(
+                    f"<td><span class='ews-wa-btn ews-wa-btn--disabled'>{chat_icon_html} WA</span></td>"
+                )
+
+            rows_html.append(f"<tr>{''.join(cells)}</tr>")
+
+        table_html = f"""
+        <style>
+        .ews-table-wrap {{
+            max-height: 560px; overflow-y: auto; border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.08); background: #0B1220;
+        }}
+        .ews-table {{
+            width: 100%; border-collapse: collapse; font-size: 13px;
+            font-family: {FONT_BODY}; color: #E7ECF2; white-space: nowrap;
+        }}
+        .ews-table thead th {{
+            position: sticky; top: 0; z-index: 1;
+            background: #141C2E; color: #9FB0C0; text-align: left;
+            font-size: 11.5px; font-weight: 700; text-transform: none;
+            padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.10);
+        }}
+        .ews-table tbody td {{
+            padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);
+        }}
+        .ews-table tbody tr:hover td {{ background: rgba(255,255,255,0.03); }}
+        .ews-table .ews-num {{ text-align: right; font-family: {FONT_MONO}; }}
+        .ews-badge {{
+            padding: 3px 10px; border-radius: 8px; font-size: 12px; font-weight: 700;
+        }}
+        .ews-wa-btn {{
+            display: inline-flex !important; align-items: center; justify-content: center;
+            gap: 6px; padding: 6px 14px; border-radius: 9px; font-size: 12.5px;
+            font-weight: 700 !important; text-decoration: none !important; color: #FFFFFF !important;
+            background: linear-gradient(180deg, #29CB6B, #1FA85A);
+            border: 1px solid rgba(255,255,255,0.15); line-height: 1;
+        }}
+        .ews-wa-btn:visited, .ews-wa-btn:hover, .ews-wa-btn:active {{
+            color: #FFFFFF !important; text-decoration: none !important;
+        }}
+        .ews-wa-btn img {{
+            width: 15px; height: 15px; object-fit: contain; border-radius: 5px;
+            pointer-events: none;
+        }}
+        .ews-wa-btn:hover {{ filter: brightness(1.08); }}
+        .ews-wa-btn--disabled {{
+            background: rgba(255,255,255,0.06); color: #6B7A88 !important; cursor: not-allowed;
+            border: 1px solid rgba(255,255,255,0.08);
+        }}
+        </style>
+        <div class="ews-table-wrap">
+          <table class="ews-table">
+            <thead><tr>{header_html}</tr></thead>
+            <tbody>{''.join(rows_html)}</tbody>
+          </table>
+        </div>
+        """
+        st.markdown(table_html, unsafe_allow_html=True)
 
     # Rejection reason chart enriches the operational diagnosis.
     section_header(
