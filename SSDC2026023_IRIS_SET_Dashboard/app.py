@@ -143,6 +143,7 @@ BORDER_STRONG = "#A9D8D1"    # Hover / active border
 
 TEAL = "#149C94"             # Primary accent and main action
 TEAL_DARK = "#0C706B"        # Strong teal for text / hover
+DEEP_TEAL = "#0A4F4A"        # Dark surface for headers, active navigation, and table heads
 TEAL_DIM = "#52BEB4"         # Secondary teal
 MINT = "#BFEBDD"             # Soft highlight
 AMBER = "#D99A32"            # Warning state
@@ -285,19 +286,22 @@ CUSTOM_CSS = f"""
   --page-bg:{PAGE_BG}; --page-bg-alt:{PAGE_BG_ALT};
   --surface:{SURFACE}; --surface-alt:{SURFACE_ALT}; --surface-strong:{SURFACE_STRONG};
   --border-light:{BORDER_LIGHT}; --border-strong:{BORDER_STRONG};
-  --teal:{TEAL}; --teal-dark:{TEAL_DARK}; --teal-dim:{TEAL_DIM}; --mint:{MINT};
+  --teal:{TEAL}; --teal-dark:{TEAL_DARK}; --deep-teal:{DEEP_TEAL};
+  --teal-dim:{TEAL_DIM}; --mint:{MINT};
   --amber:{AMBER}; --crimson:{CRIMSON}; --violet:{VIOLET};
+  color-scheme: light only;
   --text-hi:{TEXT_HIGH}; --text-mid:{TEXT_MID}; --text-low:{TEXT_LOW};
   --border:{BORDER}; --shadow:{SHADOW};
   --font-display:{FONT_DISPLAY}; --font-body:{FONT_BODY}; --font-mono:{FONT_MONO};
 }}
 
-html, body, [data-testid="stAppViewContainer"] {{
+html, body, [data-testid="stAppViewContainer"], .stApp {{
+  color-scheme: light only !important;
   background:
     radial-gradient(circle at 8% 3%, rgba(191,235,221,.75) 0, rgba(191,235,221,0) 26%),
     radial-gradient(circle at 92% 12%, rgba(82,190,180,.15) 0, rgba(82,190,180,0) 28%),
-    linear-gradient(180deg, var(--page-bg) 0%, #F8FCFB 48%, #F2FAF8 100%);
-  color: var(--text-hi);
+    linear-gradient(180deg, var(--page-bg) 0%, #F8FCFB 48%, #F2FAF8 100%) !important;
+  color: var(--text-hi) !important;
   font-family: {FONT_BODY};
 }}
 
@@ -324,7 +328,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   gap:22px; flex-wrap:wrap; padding:14px 24px;
   min-height:102px; margin:2px 0 10px;
   background:linear-gradient(135deg,#FFFFFF 0%,#F7FCFB 100%);
-  border:1px solid var(--border-light); border-radius:24px;
+  border:1px solid var(--border-light); border-left:6px solid var(--deep-teal); border-radius:24px;
   box-shadow:0 18px 42px rgba(28,94,88,.13);
 }}
 .hop-brand {{ display:flex; align-items:center; gap:25px; min-width:0; }}
@@ -398,8 +402,8 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   transform:translateY(-2px); box-shadow:0 9px 22px rgba(28,94,88,.10);
 }}
 .hop-nav-item.active {{
-  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
-  color:#FFFFFF !important; box-shadow:0 12px 26px rgba(20,156,148,.26);
+  background:linear-gradient(135deg,var(--deep-teal),var(--teal-dark));
+  color:#FFFFFF !important; box-shadow:0 12px 26px rgba(10,79,74,.28);
 }}
 .nav-icon-box {{
   width:50px; height:50px; flex:0 0 50px; border-radius:12px;
@@ -419,8 +423,9 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
 .section-desc {{ color:var(--teal-dark); font-size:12.5px; font-weight:520; line-height:1.55; max-width:760px; margin-top:4px; }}
 .section-tag {{
   font-family:{FONT_MONO}; font-size:10px; letter-spacing:.4px;
-  color:var(--teal-dark); background:#E7F7F3;
-  border:1px solid #C9EAE4; border-radius:7px; padding:5px 9px;
+  color:#FFFFFF; background:var(--deep-teal);
+  border:1px solid var(--deep-teal); border-radius:7px; padding:5px 9px;
+  box-shadow:0 6px 14px rgba(10,79,74,.14);
 }}
 
 /* [DESIGN 04] KPI and information cards */
@@ -431,8 +436,9 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   padding:15px 17px; box-shadow:var(--shadow);
 }}
 .hop-card::before, .kpi-card::before, .insight-card::before {{
-  content:''; position:absolute; left:0; right:0; top:0; height:3px;
-  background:linear-gradient(90deg,var(--teal),var(--mint)); opacity:.75;
+  content:''; position:absolute; left:0; right:0; top:0; height:4px;
+  background:linear-gradient(90deg,var(--deep-teal) 0 25%,var(--teal) 25% 58%,var(--mint) 58% 100%);
+  opacity:.95;
 }}
 .kpi-label {{ color:var(--teal-dark); font-size:11px; font-weight:700; letter-spacing:.55px; text-transform:uppercase; }}
 .kpi-value {{ color:var(--text-hi); font-family:{FONT_MONO}; font-size:27px; font-weight:650; margin-top:7px; }}
@@ -512,8 +518,20 @@ div[data-testid="stPlotlyChart"]:hover {{
 
 /* Dataframe, form, and input styling */
 [data-testid="stDataFrame"] {{
-  background:#FFFFFF; border:1px solid var(--border-light);
+  background:#FFFFFF !important; border:1px solid var(--border-light);
   border-radius:16px; overflow:hidden; box-shadow:var(--shadow);
+  color:var(--text-hi) !important;
+}}
+[data-testid="stDataFrame"] [role="columnheader"] {{
+  background:var(--deep-teal) !important;
+  color:#FFFFFF !important;
+}}
+[data-testid="stDataFrame"] [role="columnheader"] * {{
+  color:#FFFFFF !important;
+}}
+[data-testid="stDataFrame"] [role="gridcell"] {{
+  background:#FFFFFF !important;
+  color:var(--text-hi) !important;
 }}
 [data-testid="stForm"] {{
   background:linear-gradient(180deg,#FFFFFF,#FBFEFD);
@@ -534,7 +552,7 @@ div[data-testid="stPlotlyChart"]:hover {{
 [data-testid="stSlider"] [role="slider"] {{ background:var(--teal) !important; }}
 [data-testid="stCheckbox"] svg {{ color:var(--teal) !important; }}
 .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] button {{
-  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+  background:linear-gradient(135deg,var(--deep-teal),var(--teal-dark));
   color:#FFFFFF; border:0; border-radius:10px;
   font-weight:700; min-height:39px; box-shadow:0 8px 18px rgba(20,156,148,.16);
 }}
@@ -605,9 +623,10 @@ small {{
 
 /* Footer */
 .hop-footer {{
-  margin-top:14px; padding:9px 14px;
-  background:#FFFFFF; border:1px solid var(--border-light);
-  border-radius:14px; color:var(--teal-dark); font-size:11px; text-align:center;
+  margin-top:14px; padding:10px 14px;
+  background:var(--deep-teal); border:1px solid var(--deep-teal);
+  border-radius:14px; color:#FFFFFF; font-size:11px; text-align:center;
+  box-shadow:0 10px 22px rgba(10,79,74,.17);
 }}
 
 /* Wide section navigation cards with replaceable icons */
@@ -633,8 +652,8 @@ small {{
 }}
 .section-nav-link.active {{
   color:#FFFFFF !important;
-  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
-  box-shadow:0 10px 23px rgba(20,156,148,.24);
+  background:linear-gradient(135deg,var(--deep-teal),var(--teal-dark));
+  box-shadow:0 10px 23px rgba(10,79,74,.28);
 }}
 .section-nav-icon-box {{
   width:42px; height:42px; flex:0 0 42px;
@@ -685,8 +704,8 @@ small {{
 }}
 .sidebar-page-link.active {{
   color:#FFFFFF !important;
-  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
-  border-color:transparent; box-shadow:0 10px 24px rgba(20,156,148,.24);
+  background:linear-gradient(135deg,var(--deep-teal),var(--teal-dark));
+  border-color:transparent; box-shadow:0 10px 24px rgba(10,79,74,.28);
 }}
 .sidebar-page-icon-box {{
   width:40px; height:40px; flex:0 0 40px;
@@ -713,6 +732,230 @@ small {{
   .panel-icon-img {{ width:31px; height:31px; }}
   .panel-heading-title {{ font-size:17px; }}
   .panel-heading-sub {{ font-size:10.5px; }}
+}}
+
+/* Stable visual system: browser/OS dark mode does not recolor dashboard assets. */
+html, body, [data-testid="stAppViewContainer"], [data-testid="stSidebar"],
+[data-testid="stForm"], [data-testid="stDataFrame"], div[data-testid="stPlotlyChart"] {{
+  color-scheme: light only !important;
+}}
+[data-baseweb="popover"], [data-baseweb="menu"], [role="listbox"],
+[data-baseweb="select"] > div, [data-baseweb="input"] > div,
+[data-testid="stNumberInput"] input, [data-testid="stDateInput"] input {{
+  background:#FFFFFF !important;
+  color:var(--text-hi) !important;
+}}
+[data-baseweb="popover"] *, [data-baseweb="menu"] *, [role="listbox"] * {{
+  color:var(--text-hi) !important;
+}}
+@media (prefers-color-scheme: dark) {{
+  html, body, [data-testid="stAppViewContainer"], .stApp {{
+    background:
+      radial-gradient(circle at 8% 3%, rgba(191,235,221,.75) 0, rgba(191,235,221,0) 26%),
+      radial-gradient(circle at 92% 12%, rgba(82,190,180,.15) 0, rgba(82,190,180,0) 28%),
+      linear-gradient(180deg, var(--page-bg) 0%, #F8FCFB 48%, #F2FAF8 100%) !important;
+    color:var(--text-hi) !important;
+  }}
+  [data-testid="stSidebar"] {{
+    background:linear-gradient(180deg,#F5FCFA,#EAF7F4) !important;
+  }}
+  .hop-topbar, .hop-card, .kpi-card, .insight-card,
+  [data-testid="stForm"], div[data-testid="stPlotlyChart"],
+  [data-testid="stDataFrame"], .sidebar-page-link,
+  .section-nav-shell, .hop-nav-shell {{
+    background:#FFFFFF !important;
+    color:var(--text-hi) !important;
+  }}
+  .sidebar-page-link.active, .section-nav-link.active, .hop-nav-item.active {{
+    background:linear-gradient(135deg,var(--deep-teal),var(--teal-dark)) !important;
+    color:#FFFFFF !important;
+  }}
+}}
+
+/* =====================================================================
+   FINAL UX OVERRIDES
+   - Charts stay flat and no longer jump on hover.
+   - Sidebar is permanently dark teal.
+   - Page and section hierarchy uses explicit numbering.
+   ===================================================================== */
+
+/* Flat interactive charts: no clipped shadows and no hover movement. */
+div[data-testid="stPlotlyChart"],
+div[data-testid="stPlotlyChart"]:hover,
+.st-key-sankey_chart div[data-testid="stPlotlyChart"],
+.st-key-sankey_chart div[data-testid="stPlotlyChart"]:hover {{
+  background:#FFFFFF !important;
+  border:2px solid #86C4BC !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  transform:none !important;
+  transition:border-color .16s ease !important;
+}}
+div[data-testid="stPlotlyChart"]:hover {{
+  border-color:#5EAFA5 !important;
+}}
+
+/* Dark-teal settings panel. Every text item sitting on the dark surface is white. */
+[data-testid="stSidebar"],
+[data-testid="stSidebar"] > div,
+[data-testid="stSidebar"] [data-testid="stSidebarContent"] {{
+  background:linear-gradient(180deg,#073F3B 0%,#0A4F4A 52%,#0C625C 100%) !important;
+  border-right:1px solid rgba(255,255,255,.18) !important;
+}}
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] h4,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] small,
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p,
+[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+[data-testid="stSidebar"] summary,
+[data-testid="stSidebar"] summary *,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] * {{
+  color:#FFFFFF !important;
+}}
+[data-testid="stSidebar"] hr {{
+  border-color:rgba(255,255,255,.20) !important;
+}}
+[data-testid="stSidebar"] [data-testid="stExpander"] {{
+  background:rgba(255,255,255,.07) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+  border-radius:12px !important;
+}}
+
+/* Sidebar fields remain white for contrast, with dark-teal field text. */
+[data-testid="stSidebar"] [data-baseweb="select"] > div,
+[data-testid="stSidebar"] [data-baseweb="input"] > div,
+[data-testid="stSidebar"] [data-testid="stDateInput"] > div,
+[data-testid="stSidebar"] [data-testid="stDateInput"] input {{
+  background:#FFFFFF !important;
+  border-color:rgba(255,255,255,.72) !important;
+  color:var(--deep-teal) !important;
+}}
+[data-testid="stSidebar"] [data-baseweb="select"] > div *,
+[data-testid="stSidebar"] [data-baseweb="input"] > div *,
+[data-testid="stSidebar"] [data-testid="stDateInput"] input {{
+  color:var(--deep-teal) !important;
+  -webkit-text-fill-color:var(--deep-teal) !important;
+}}
+[data-testid="stSidebar"] [data-baseweb="select"] svg,
+[data-testid="stSidebar"] [data-testid="stDateInput"] svg {{
+  color:var(--deep-teal) !important;
+  fill:var(--deep-teal) !important;
+}}
+
+/* Page cards on the dark sidebar. */
+[data-testid="stSidebar"] .sidebar-page-link {{
+  background:rgba(255,255,255,.08) !important;
+  border:1px solid rgba(255,255,255,.24) !important;
+  color:#FFFFFF !important;
+  box-shadow:none !important;
+}}
+[data-testid="stSidebar"] .sidebar-page-link:hover {{
+  background:rgba(255,255,255,.15) !important;
+  border-color:rgba(255,255,255,.48) !important;
+  transform:none !important;
+  box-shadow:none !important;
+}}
+[data-testid="stSidebar"] .sidebar-page-link:not(.active) *,
+[data-testid="stSidebar"] .sidebar-page-link:not(.active) .sidebar-page-kicker,
+[data-testid="stSidebar"] .sidebar-page-link:not(.active) .sidebar-page-label {{
+  color:#FFFFFF !important;
+}}
+[data-testid="stSidebar"] .sidebar-page-link.active {{
+  background:#FFFFFF !important;
+  border-color:#FFFFFF !important;
+  box-shadow:0 10px 24px rgba(0,0,0,.18) !important;
+}}
+[data-testid="stSidebar"] .sidebar-page-link.active *,
+[data-testid="stSidebar"] .sidebar-page-link.active .sidebar-page-kicker,
+[data-testid="stSidebar"] .sidebar-page-link.active .sidebar-page-label {{
+  color:var(--deep-teal) !important;
+}}
+[data-testid="stSidebar"] .sidebar-page-icon-box {{
+  background:rgba(255,255,255,.13) !important;
+  border-color:rgba(255,255,255,.28) !important;
+}}
+[data-testid="stSidebar"] .sidebar-page-link.active .sidebar-page-icon-box {{
+  background:#EAF7F4 !important;
+  border-color:#CFE9E4 !important;
+}}
+
+/* Clear page-level context before the user chooses a section. */
+.page-context-bar {{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:10px 13px;
+  margin:3px 0 8px;
+  background:#E7F5F2;
+  border:1px solid #BFDCD7;
+  border-left:5px solid var(--deep-teal);
+  border-radius:13px;
+}}
+.page-context-kicker {{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 8px;
+  border-radius:7px;
+  background:var(--deep-teal);
+  color:#FFFFFF;
+  font-family:var(--font-mono);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.55px;
+}}
+.page-context-title {{
+  color:var(--deep-teal);
+  font-family:var(--font-display);
+  font-size:15px;
+  font-weight:750;
+}}
+.page-context-hint {{
+  margin-left:auto;
+  color:var(--teal-dark);
+  font-size:10.5px;
+  font-weight:600;
+}}
+
+/* Two-level labels inside page and section cards. */
+.sidebar-page-copy,
+.section-nav-copy {{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+}}
+.sidebar-page-kicker,
+.section-nav-kicker {{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:8.5px;
+  font-weight:700;
+  letter-spacing:.55px;
+  opacity:.82;
+}}
+.sidebar-page-label,
+.section-nav-label {{
+  display:block;
+  font-size:12px;
+  font-weight:750;
+  line-height:1.25;
+}}
+.section-nav-link.active .section-nav-kicker,
+.section-nav-link.active .section-nav-label {{
+  color:#FFFFFF !important;
+}}
+.section-nav-link:not(.active) .section-nav-kicker {{
+  color:var(--teal-dark) !important;
+}}
+.section-nav-link:not(.active) .section-nav-label {{
+  color:var(--text-hi) !important;
 }}
 
 </style>
@@ -861,23 +1104,46 @@ def section_navigation(
     page_key: str,
     options: dict[str, tuple[str, str]],
 ) -> str:
-    """Render wide, clickable section cards with replaceable PNG/SVG icons."""
+    """Render numbered section cards so page and section hierarchy is obvious."""
+    page_context = {
+        "executive": ("1", "Ringkasan Penempatan"),
+        "matching": ("2", "Temukan Kandidat"),
+        "operations": ("3", "Pantau Proses Seleksi"),
+    }
+    page_number, page_title = page_context.get(page_key, ("-", "Dashboard"))
+
     keys = list(options)
     current_section = query_param_value("section", keys[0])
     if current_section not in options:
         current_section = keys[0]
 
+    # Clear page-level context before the section-level navigation.
+    st.markdown(
+        f"""
+        <div class="page-context-bar">
+          <span class="page-context-kicker">HALAMAN {html.escape(page_number)}</span>
+          <span class="page-context-title">{html.escape(page_title)}</span>
+          <span class="page-context-hint">Pilih bagian analisis di bawah</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     items = [
         f'<div class="section-nav-shell" style="--section-count:{len(keys)};">'
     ]
-    for key, (label, icon_key) in options.items():
+    for index, (key, (label, icon_key)) in enumerate(options.items(), start=1):
         active_class = " active" if key == current_section else ""
+        section_number = f"{page_number}.{index}"
         items.append(
             f'<a class="section-nav-link{active_class}" '
             f'href="?page={html.escape(page_key)}&section={html.escape(key)}" target="_self">'
             f'<span class="section-nav-icon-box">'
             f'{icon_html(icon_key, "section-nav-icon")}</span>'
-            f'<span>{html.escape(label)}</span></a>'
+            f'<span class="section-nav-copy">'
+            f'<span class="section-nav-kicker">BAGIAN {html.escape(section_number)}</span>'
+            f'<span class="section-nav-label">{html.escape(label)}</span>'
+            f'</span></a>'
         )
     items.append("</div>")
     st.markdown("".join(items), unsafe_allow_html=True)
@@ -916,7 +1182,7 @@ try:
 except FileNotFoundError as exc:
     st.error("Dashboard belum dapat membaca hasil ETL.")
     st.code(
-        "py etl.py\npy -m streamlit run app_revised_landscape_v2.py",
+        "py etl.py\npy -m streamlit run app_revised_dark_teal_v2.py",
         language="bash",
     )
     st.caption(str(exc))
@@ -959,9 +1225,9 @@ else:
 # SIDEBAR SETTINGS AND PAGE NAVIGATION
 # =============================================================================
 PAGE_OPTIONS = {
-    "executive": ("Ringkasan Penempatan", "nav_executive", "overview"),
-    "matching": ("Temukan Kandidat", "nav_matching", "setup"),
-    "operations": ("Pantau Proses Seleksi", "nav_operations", "pipeline"),
+    "executive": ("1", "Ringkasan Penempatan", "nav_executive", "overview"),
+    "matching": ("2", "Temukan Kandidat", "nav_matching", "setup"),
+    "operations": ("3", "Pantau Proses Seleksi", "nav_operations", "pipeline"),
 }
 
 current_page_key = query_param_value("page", "executive")
@@ -970,16 +1236,19 @@ if current_page_key not in PAGE_OPTIONS:
 
 with st.sidebar:
     st.markdown("### Pengaturan Dashboard")
-    st.caption("Pilih fokus dashboard")
+    st.caption("Pilih halaman utama")
     page_nav_html = ['<div class="sidebar-page-nav">']
-    for page_key, (page_label, page_icon, default_section) in PAGE_OPTIONS.items():
+    for page_key, (page_number, page_label, page_icon, default_section) in PAGE_OPTIONS.items():
         active_class = " active" if page_key == current_page_key else ""
         page_nav_html.append(
             f'<a class="sidebar-page-link{active_class}" '
             f'href="?page={html.escape(page_key)}&section={html.escape(default_section)}" target="_self">'
             f'<span class="sidebar-page-icon-box">'
             f'{icon_html(page_icon, "sidebar-page-icon")}</span>'
-            f'<span>{html.escape(page_label)}</span></a>'
+            f'<span class="sidebar-page-copy">'
+            f'<span class="sidebar-page-kicker">HALAMAN {html.escape(page_number)}</span>'
+            f'<span class="sidebar-page-label">{html.escape(page_label)}</span>'
+            f'</span></a>'
         )
     page_nav_html.append("</div>")
     st.markdown("".join(page_nav_html), unsafe_allow_html=True)
@@ -996,7 +1265,7 @@ with st.sidebar:
     )
     st.markdown("---")
     st.caption(
-        "Gunakan pilihan bagian di area utama untuk berpindah visual tanpa perlu menggulir halaman panjang."
+        "Pilih HALAMAN di panel ini, lalu pilih BAGIAN bernomor di area utama."
     )
     with st.expander("Periksa ikon dan aset"):
         st.caption("Kode mencari PNG/SVG di assets/, assets/icons/, dan folder project.")
@@ -1099,9 +1368,10 @@ def style_figure(fig: go.Figure, height: int | None = None) -> go.Figure:
     `undefined`; title_text="" and the .g-gtitle CSS guard prevent that.
     """
     fig.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font={"family": "Roboto Flex", "color": TEAL_DARK, "size": 12},
+        template="plotly_white",
+        paper_bgcolor=SURFACE,
+        plot_bgcolor=SURFACE,
+        font={"family": "Roboto Flex", "color": DEEP_TEAL, "size": 12},
         title_text="",
         margin={"l": 18, "r": 18, "t": 18, "b": 18},
         hoverlabel={
@@ -2569,6 +2839,12 @@ else:
             )
             aging_total = int(aging_counts.sum())
             aging_fig = go.Figure()
+            aging_legend_labels = {
+                "1–7 hari": "1–7 hari · baru melewati batas",
+                "8–30 hari": "8–30 hari · perlu dipantau",
+                "31–90 hari": "31–90 hari · prioritas tinggi",
+                ">90 hari": ">90 hari · segera ditindaklanjuti",
+            }
             for bucket in aging_order:
                 count = int(aging_counts[bucket])
                 percentage = safe_divide(count, aging_total) * 100
@@ -2576,7 +2852,8 @@ else:
                     go.Bar(
                         y=["Proses terlambat"],
                         x=[count],
-                        name=bucket,
+                        name=aging_legend_labels[bucket],
+                        legendgroup=bucket,
                         orientation="h",
                         marker_color=aging_colors[bucket],
                         text=[
@@ -2598,14 +2875,23 @@ else:
                 xaxis_title="Jumlah proses",
                 yaxis_title=None,
                 legend={
+                    "title": {
+                        "text": "<b>Keterangan warna</b>",
+                        "font": {"size": 11, "color": DEEP_TEAL},
+                    },
                     "orientation": "h",
                     "yanchor": "bottom",
-                    "y": 1.03,
+                    "y": 1.05,
                     "xanchor": "left",
                     "x": 0,
-                    "font": {"size": 11},
+                    "traceorder": "normal",
+                    "font": {"size": 10.5, "color": DEEP_TEAL},
+                    "bgcolor": "rgba(255,255,255,.96)",
+                    "bordercolor": BORDER_LIGHT,
+                    "borderwidth": 1,
+                    "itemsizing": "constant",
                 },
-                margin={"l": 15, "r": 15, "t": 55, "b": 30},
+                margin={"l": 15, "r": 15, "t": 88, "b": 30},
             )
             aging_fig.update_yaxes(showticklabels=False)
             st.plotly_chart(
@@ -2882,7 +3168,7 @@ else:
             }}
             .ews-table thead th {{
                 position: sticky; top: 0; z-index: 2;
-                background: #EAF7F4; color: #0C706B; text-align: left;
+                background: #0A4F4A; color: #FFFFFF; text-align: left;
                 font-size: 10.8px; font-weight: 750; letter-spacing: .2px;
                 padding: 12px 13px; border-bottom: 1px solid #CFE7E2;
                 box-shadow: 0 1px 0 rgba(20,112,107,.06);
