@@ -1,34 +1,3 @@
-"""
-HOP THROUGH DATA | CDC PLACEMENT INTELLIGENCE
-Streamlit dashboard for SSDC 2026
-
-LIGHT DESIGN SYSTEM
--------------------
-Search the labels below to edit the visual design quickly:
-    [DESIGN 01] Color palette
-    [DESIGN 02] Typography
-    [DESIGN 03] Global page width and spacing
-    [DESIGN 04] Card appearance
-    [DESIGN 05] Navigation style
-    [LAYOUT 01] Executive KPI grid
-    [LAYOUT 02] Executive analysis grid
-    [LAYOUT 03] Matching sandbox grid
-    [LAYOUT 04] Funnel and EWS grid
-
-Custom icons are configured in ICON_PATHS. PNG/SVG assets are resolved from assets/, assets/icons/, or the project root.
-
-This app reads parquet files produced by etl.py from:
-    clean_data/company.parquet
-    clean_data/talent_request.parquet
-    clean_data/student_all.parquet
-    clean_data/status_student.parquet
-    clean_data/tracking_company.parquet
-    clean_data/tracking_student.parquet
-
-Run:
-    py etl.py
-    py -m streamlit run app.py --server.port 8502
-"""
 
 from __future__ import annotations
 
@@ -47,36 +16,21 @@ import plotly.graph_objects as go
 import streamlit as st
 
 
-# =============================================================================
-# APPLICATION IDENTITY
-# =============================================================================
-# Edit these values before submission. Do not add a university identity,
-# because the competition rules prohibit institutional identification.
 DASHBOARD_TITLE = "CareerBridge"
 DASHBOARD_SUBTITLE = "Connecting Talent with Opportunity · Career Opportunity Matching and Monitoring Dashboard"
 TEAM_NAME = "IRIS SET"
 PARTICIPANT_NUMBER = "SSDC2026023"
 
 
-# =============================================================================
-# [DESIGN 00] ASSET / ICON PLACEHOLDERS
-# =============================================================================
-# Put your own PNG or SVG files at these paths. You only need to replace the
-# path strings below when changing an icon. The dashboard stays clean even if
-# an asset has not been added yet because a neutral placeholder is shown.
 ICON_PATHS = {
-    # Brand
     "logo": "assets/logo.png",
     "favicon": "assets/logo.png",
     "chat": "assets/chat2.png",
 
-    # Page navigation shown in Dashboard Settings
     "nav_executive": "assets/nav/nav_executive.png",
     "nav_matching": "assets/nav/nav_matching.png",
     "nav_operations": "assets/nav/nav_operations.png",
 
-    # Section navigation and section headings
-    # Replace these files with your own PNG/SVG icons.
     "section_executive_overview": "assets/sections/executive_overview.png",
     "section_executive_flow": "assets/sections/executive_flow.png",
     "section_executive_placement": "assets/sections/executive_placement.png",
@@ -89,7 +43,6 @@ ICON_PATHS = {
     "section_operations_followup": "assets/sections/operations_followup.png",
     "section_operations_outcomes": "assets/sections/operations_outcomes.png",
 
-    # KPI cards
     "student": "assets/cards/student.svg",
     "placement": "assets/cards/placement.svg",
     "company": "assets/cards/company.svg",
@@ -100,24 +53,20 @@ ICON_PATHS = {
     "matching": "assets/cards/matching.svg",
     "send": "assets/cards/send.svg",
 
-    # Page 2 summary cards
     "candidate_ready": "assets/cards/candidate_ready.svg",
     "profile_complete": "assets/cards/profile_complete.svg",
     "request_active": "assets/cards/request_active.svg",
 
-    # Page 3 monitoring cards
     "overdue": "assets/cards/overdue.svg",
     "median_wait": "assets/cards/median_wait.svg",
     "stage_stalled": "assets/cards/stage_stalled.svg",
     "affected_companies": "assets/cards/affected_companies.svg",
     "response_progress": "assets/cards/response_progress.svg",
 
-    # Matching form headings
     "panel_eligibility": "assets/panel_eligibility.png",
     "panel_filter": "assets/panel_filter.png",
     "panel_request": "assets/panel_request.png",
 
-    # Insight cards
     "talent_source": "assets/insight/talent_source.png",
     "partner_effective": "assets/insight/partner_effective.png",
     "mobility": "assets/insight/mobility.png",
@@ -128,50 +77,42 @@ BASE_DIR = Path(__file__).resolve().parent
 CLEAN_DIR = BASE_DIR / "clean_data"
 
 
-# =============================================================================
-# [DESIGN 01] LIGHT TEAL COLOR PALETTE
-# =============================================================================
-# Change these HEX values to recolor the whole dashboard. The first group
-# controls backgrounds, the second group controls accents and status colors.
-PAGE_BG = "#F1FAF8"          # Main page background
-PAGE_BG_ALT = "#E8F7F4"      # Decorative pale-teal background
-SURFACE = "#FFFFFF"          # Main card background
-SURFACE_ALT = "#F8FCFB"      # Secondary card / input background
-SURFACE_STRONG = "#EAF7F4"   # Selected or highlighted surface
-BORDER_LIGHT = "#D9ECE8"     # Card and input border
-BORDER_STRONG = "#A9D8D1"    # Hover / active border
+PAGE_BG = "#F1FAF8"
+PAGE_BG_ALT = "#E8F7F4"
+SURFACE = "#FFFFFF"
+SURFACE_ALT = "#F8FCFB"
+SURFACE_STRONG = "#EAF7F4"
+BORDER_LIGHT = "#D9ECE8"
+BORDER_STRONG = "#A9D8D1"
 
-TEAL = "#149C94"             # Primary accent and main action
-TEAL_DARK = "#0C706B"        # Strong teal for text / hover
-DEEP_TEAL = "#0A4F4A"        # Dark surface for headers, active navigation, and table heads
-TEAL_DIM = "#52BEB4"         # Secondary teal
-MINT = "#BFEBDD"             # Soft highlight
-AMBER = "#D99A32"            # Warning state
-CRIMSON = "#D85E70"          # Danger state
-VIOLET = "#7682D8"           # Secondary analytical accent
+TEAL = "#149C94"
+TEAL_DARK = "#0C706B"
+DEEP_TEAL = "#0A4F4A"
+TEAL_DIM = "#52BEB4"
+MINT = "#BFEBDD"
+AMBER = "#D99A32"
+CRIMSON = "#D85E70"
+VIOLET = "#7682D8"
 
-TEXT_HIGH = "#153B39"        # Main text
-TEXT_MID = "#526E6C"         # Secondary text
-TEXT_LOW = "#2B6661"         # Small text: dark teal for stronger readability
+TEXT_HIGH = "#153B39"
+TEXT_MID = "#526E6C"
+TEXT_LOW = "#2B6661"
 BORDER = "rgba(20, 112, 107, 0.18)"
 SHADOW = "0 22px 50px rgba(28, 94, 88, 0.20), 0 7px 18px rgba(28, 94, 88, 0.11)"
 
-# Bright chart palette. Charts intentionally use colors outside the dashboard teal.
 CHART_COLORS = [
-    "#6F8FEF",  # soft cornflower blue
-    "#9887E8",  # soft violet
-    "#E98C7C",  # soft coral
-    "#E5B65F",  # soft amber
-    "#DE85AE",  # soft rose
-    "#65B7D8",  # soft sky blue
-    "#77BE91",  # soft green
-    "#E7A06A",  # soft orange
-    "#8795AA",  # blue-grey
-    "#B383D6",  # soft orchid
+    "#6F8FEF",
+    "#9887E8",
+    "#E98C7C",
+    "#E5B65F",
+    "#DE85AE",
+    "#65B7D8",
+    "#77BE91",
+    "#E7A06A",
+    "#8795AA",
+    "#B383D6",
 ]
 
-# Compatibility aliases used by existing chart code. You normally do not need
-# to edit these if the palette above has already been changed.
 NAVY_950 = PAGE_BG
 NAVY_900 = SURFACE
 NAVY_800 = SURFACE
@@ -180,14 +121,6 @@ NAVY_700 = SURFACE_STRONG
 NAVY_600 = BORDER_STRONG
 
 
-# =============================================================================
-# [DESIGN 02] TYPOGRAPHY
-# =============================================================================
-# Requested font system:
-#   Heading  : Nobile
-#   Body     : Roboto Flex
-#   KPI/data : Roboto Mono
-# Google Fonts require internet. The fallback fonts keep the app readable.
 FONT_DISPLAY = "'Encode Sans', 'Segoe UI', sans-serif"
 FONT_BODY = "'Roboto Flex', 'Segoe UI', sans-serif"
 FONT_MONO = "'Electrolize', 'Consolas', monospace"
@@ -259,10 +192,6 @@ def icon_html(icon_key: str, class_name: str = "ui-icon") -> str:
     )
 
 
-# =============================================================================
-# [DESIGN 03] GLOBAL PAGE CONFIGURATION
-# =============================================================================
-# Change layout="wide" to layout="centered" for a narrower dashboard.
 favicon_file = resolve_asset_path(ICON_PATHS["favicon"])
 st.set_page_config(
     page_title=f"{DASHBOARD_TITLE} | SSDC 2026",
@@ -272,12 +201,6 @@ st.set_page_config(
 )
 
 
-# =============================================================================
-# GLOBAL CSS
-# =============================================================================
-# [DESIGN 03] Change max-width and padding to control the overall page width.
-# [DESIGN 04] Change border-radius, border, and shadow for the card appearance.
-# [DESIGN 05] Change the stRadio rules to redesign horizontal navigation.
 CUSTOM_CSS = f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,300..700&family=Electrolize&display=swap');
@@ -321,8 +244,7 @@ h1, h2, h3, h4 {{
 
 p, label, div, button, input {{ font-family: {FONT_BODY}; }}
 
-/* Header shell
-   Logo is deliberately transparent and is not placed inside a small box. */
+
 .hop-topbar {{
   display:flex; align-items:center; justify-content:space-between;
   gap:22px; flex-wrap:wrap; padding:14px 24px;
@@ -366,7 +288,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   .hop-sub {{ font-size:12px; }}
 }}
 
-/* Generic custom icons. Replace paths in ICON_PATHS near the top of the file. */
+
 .ui-icon {{ width:30px; height:30px; object-fit:contain; display:block; }}
 .icon-placeholder {{
   position:relative; display:inline-block;
@@ -383,7 +305,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   transform:rotate(-25deg); right:3px; bottom:4px;
 }}
 
-/* Custom navigation with replaceable PNG/SVG icons */
+
 .hop-nav-shell {{
   display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
   padding:8px; background:#FFFFFF;
@@ -417,7 +339,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   .hop-nav-shell {{ grid-template-columns:1fr; }}
 }}
 
-/* Section headings */
+
 .section-row {{ display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:15px 0 8px; }}
 .section-title {{ font-family:{FONT_DISPLAY}; font-size:17px; font-weight:700; color:var(--text-hi); }}
 .section-desc {{ color:var(--teal-dark); font-size:12.5px; font-weight:520; line-height:1.55; max-width:760px; margin-top:4px; }}
@@ -428,7 +350,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   box-shadow:0 6px 14px rgba(10,79,74,.14);
 }}
 
-/* [DESIGN 04] KPI and information cards */
+
 .hop-card, .kpi-card, .insight-card {{
   position:relative; overflow:hidden;
   background:linear-gradient(180deg,#FFFFFF 0%,#FBFEFD 100%);
@@ -456,7 +378,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   line-height:1.24; max-width:78%; margin-top:11px;
 }}
 
-/* Page 3 response summary */
+
 .response-progress-card {{
   position:relative; min-height:245px; padding:25px 26px; overflow:hidden;
   background:linear-gradient(145deg,#FFFFFF 0%,#F8FCFB 100%);
@@ -498,7 +420,7 @@ p, label, div, button, input {{ font-family: {FONT_BODY}; }}
   font-family:{FONT_DISPLAY}; font-size:16px; font-weight:700;
 }}
 
-/* Plotly containers act as clean white chart cards */
+
 div[data-testid="stPlotlyChart"] {{
   background:#FFFFFF; border:1.25px solid #A9D5CF;
   border-radius:18px; padding:5px 7px; box-shadow:var(--shadow);
@@ -508,15 +430,14 @@ div[data-testid="stPlotlyChart"]:hover {{
   transform:translateY(-2px);
   box-shadow:0 26px 58px rgba(28,94,88,.24), 0 7px 16px rgba(28,94,88,.12);
 }}
-/* Sankey stays flat by request; only its border remains. */
+
 .st-key-sankey_chart div[data-testid="stPlotlyChart"] {{
   box-shadow:none !important; transform:none !important;
 }}
-/* Prevent an empty Plotly title object from rendering as the word undefined. */
+
 .g-gtitle {{ display:none !important; }}
 
 
-/* Dataframe, form, and input styling */
 [data-testid="stDataFrame"] {{
   background:#FFFFFF !important; border:1px solid var(--border-light);
   border-radius:16px; overflow:hidden; box-shadow:var(--shadow);
@@ -560,7 +481,7 @@ div[data-testid="stPlotlyChart"]:hover {{
   filter:brightness(1.04); color:#FFFFFF; transform:translateY(-1px);
 }}
 
-/* Sidebar */
+
 [data-testid="stSidebar"] {{
   background:linear-gradient(180deg,#F5FCFA,#EAF7F4);
   border-right:1px solid var(--border-light);
@@ -568,17 +489,17 @@ div[data-testid="stPlotlyChart"]:hover {{
 [data-testid="stSidebar"] * {{ color:var(--text-mid); }}
 [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {{ color:var(--text-hi); }}
 
-/* Streamlit alerts */
+
 [data-testid="stAlert"] {{ border-radius:14px; border:1px solid var(--border-light); }}
 
-/* Status badges */
+
 .badge {{ display:inline-block; border-radius:999px; padding:4px 9px; font-size:10.5px; font-weight:700; }}
 .badge-green {{ color:var(--teal-dark); background:#E1F6F1; }}
 .badge-amber {{ color:#9B681D; background:#FFF2D8; }}
 .badge-red {{ color:#A83F51; background:#FCE7EB; }}
 .badge-violet {{ color:#5966B8; background:#EEF0FF; }}
 
-/* Stronger readability for Streamlit captions and helper text */
+
 [data-testid="stCaptionContainer"] p,
 [data-testid="stWidgetLabel"] p,
 small {{
@@ -586,7 +507,7 @@ small {{
   font-weight:520 !important;
 }}
 
-/* Insight cards with large, replaceable icons */
+
 .insight-head {{ display:flex; align-items:center; justify-content:space-between; gap:12px; }}
 .insight-icon-box {{
   width:64px; height:64px; flex:0 0 64px; border-radius:17px;
@@ -600,7 +521,6 @@ small {{
 .insight-card .card-sub {{ font-size:12.5px; line-height:1.55; max-width:88%; }}
 
 
-/* Matching form headings with large custom icons */
 .panel-heading {{
   display:flex; align-items:center; gap:14px; margin:1px 0 17px;
 }}
@@ -621,7 +541,7 @@ small {{
   font-weight:520; margin-top:4px;
 }}
 
-/* Footer */
+
 .hop-footer {{
   margin-top:14px; padding:10px 14px;
   background:var(--deep-teal); border:1px solid var(--deep-teal);
@@ -629,7 +549,7 @@ small {{
   box-shadow:0 10px 22px rgba(10,79,74,.17);
 }}
 
-/* Wide section navigation cards with replaceable icons */
+
 .section-nav-shell {{
   --section-count:4;
   display:grid;
@@ -670,7 +590,7 @@ small {{
   .section-nav-shell {{ grid-template-columns:repeat(2,minmax(0,1fr)); }}
 }}
 
-/* Section heading with a dedicated icon area */
+
 .section-heading-main {{
   display:flex; align-items:center; gap:12px; min-width:0;
 }}
@@ -684,7 +604,7 @@ small {{
   width:31px; height:31px; object-fit:contain; display:block;
 }}
 
-/* Wide page navigation cards inside Dashboard Settings */
+
 .sidebar-page-nav {{
   display:flex; flex-direction:column; gap:8px; margin:6px 0 15px;
 }}
@@ -718,7 +638,7 @@ small {{
 .sidebar-page-icon {{
   width:27px; height:27px; object-fit:contain; display:block;
 }}
-/* Compact 1920 x 1080 presentation canvas */
+
 @media (min-width:1500px) and (min-height:850px) {{
   [data-testid="stSidebar"] {{ min-width:285px; max-width:285px; }}
   .section-title {{ font-size:16px; }}
@@ -734,7 +654,7 @@ small {{
   .panel-heading-sub {{ font-size:10.5px; }}
 }}
 
-/* Stable visual system: browser/OS dark mode does not recolor dashboard assets. */
+
 html, body, [data-testid="stAppViewContainer"], [data-testid="stSidebar"],
 [data-testid="stForm"], [data-testid="stDataFrame"], div[data-testid="stPlotlyChart"] {{
   color-scheme: light only !important;
@@ -772,14 +692,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stSidebar"],
   }}
 }}
 
-/* =====================================================================
-   FINAL UX OVERRIDES
-   - Charts stay flat and no longer jump on hover.
-   - Sidebar is permanently dark teal.
-   - Page and section hierarchy uses explicit numbering.
-   ===================================================================== */
 
-/* Flat interactive charts: no clipped shadows and no hover movement. */
 div[data-testid="stPlotlyChart"],
 div[data-testid="stPlotlyChart"]:hover,
 .st-key-sankey_chart div[data-testid="stPlotlyChart"],
@@ -795,7 +708,7 @@ div[data-testid="stPlotlyChart"]:hover {{
   border-color:#5EAFA5 !important;
 }}
 
-/* Dark-teal settings panel. Every text item sitting on the dark surface is white. */
+
 [data-testid="stSidebar"],
 [data-testid="stSidebar"] > div,
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] {{
@@ -826,7 +739,7 @@ div[data-testid="stPlotlyChart"]:hover {{
   border-radius:12px !important;
 }}
 
-/* Sidebar fields remain white for contrast, with dark-teal field text. */
+
 [data-testid="stSidebar"] [data-baseweb="select"] > div,
 [data-testid="stSidebar"] [data-baseweb="input"] > div,
 [data-testid="stSidebar"] [data-testid="stDateInput"] > div,
@@ -847,7 +760,7 @@ div[data-testid="stPlotlyChart"]:hover {{
   fill:var(--deep-teal) !important;
 }}
 
-/* Page cards on the dark sidebar. */
+
 [data-testid="stSidebar"] .sidebar-page-link {{
   background:rgba(255,255,255,.08) !important;
   border:1px solid rgba(255,255,255,.24) !important;
@@ -884,7 +797,7 @@ div[data-testid="stPlotlyChart"]:hover {{
   border-color:#CFE9E4 !important;
 }}
 
-/* Clear page-level context before the user chooses a section. */
+
 .page-context-bar {{
   display:flex;
   align-items:center;
@@ -922,7 +835,7 @@ div[data-testid="stPlotlyChart"]:hover {{
   font-weight:600;
 }}
 
-/* Two-level labels inside page and section cards. */
+
 .sidebar-page-copy,
 .section-nav-copy {{
   min-width:0;
@@ -963,9 +876,6 @@ div[data-testid="stPlotlyChart"]:hover {{
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
-# =============================================================================
-# DATA LOADING AND VALIDATION
-# =============================================================================
 REQUIRED_FILES = {
     "company": "company.parquet",
     "talent_request": "talent_request.parquet",
@@ -991,7 +901,6 @@ def load_data(clean_dir: str) -> dict[str, pd.DataFrame]:
         for name, filename in REQUIRED_FILES.items()
     }
 
-    # Standardize date columns again for safety if parquet was generated elsewhere.
     date_columns = {
         "company": ["created_at"],
         "talent_request": ["request_date"],
@@ -1117,7 +1026,6 @@ def section_navigation(
     if current_section not in options:
         current_section = keys[0]
 
-    # Clear page-level context before the section-level navigation.
     st.markdown(
         f"""
         <div class="page-context-bar">
@@ -1199,9 +1107,6 @@ status_student = DATA["status_student"].copy()
 tracking_company = DATA["tracking_company"].copy()
 tracking_student = DATA["tracking_student"].copy()
 
-# The response-age calculation should follow the newest active selection record.
-# Sync dates can be much newer than the actual recruitment history and would
-# otherwise make every process look hundreds of days late.
 _active_update_dates = pd.to_datetime(
     tracking_student.loc[
         tracking_student.get("progress_student", pd.Series("", index=tracking_student.index)).isin(ACTIVE_STAGES),
@@ -1220,10 +1125,6 @@ else:
     ).normalize()
 
 
-
-# =============================================================================
-# SIDEBAR SETTINGS AND PAGE NAVIGATION
-# =============================================================================
 PAGE_OPTIONS = {
     "executive": ("1", "Ringkasan Penempatan", "nav_executive", "overview"),
     "matching": ("2", "Temukan Kandidat", "nav_matching", "setup"),
@@ -1267,21 +1168,11 @@ with st.sidebar:
     st.caption(
         "Pilih HALAMAN di panel ini, lalu pilih BAGIAN bernomor di area utama."
     )
-    with st.expander("Periksa ikon dan aset"):
-        st.caption("Kode mencari PNG/SVG di assets/, assets/icons/, dan folder project.")
-        for asset_key, configured_path in ICON_PATHS.items():
-            resolved_path = resolve_asset_path(configured_path)
-            status_text = "Terdeteksi" if resolved_path else "Belum ditemukan"
-            shown_path = str(resolved_path.relative_to(BASE_DIR)) if resolved_path else configured_path
-            st.write(f"**{asset_key}** · {status_text}: `{shown_path}`")
 
 AS_OF = pd.Timestamp(as_of_date)
 IS_PUBLIC = privacy_mode == "Disamarkan untuk lomba"
 
 
-# =============================================================================
-# DATA MARTS AND DERIVED METRICS
-# =============================================================================
 @st.cache_data(show_spinner=False)
 def build_placement_mart(
     tracking_student_df: pd.DataFrame,
@@ -1314,7 +1205,6 @@ def build_placement_mart(
 
 placement_mart = build_placement_mart(tracking_student, tracking_company, company)
 
-# Canonical outcome follows the dataset documentation.
 rejection_text = placement_mart.get("rejection", pd.Series("", index=placement_mart.index)).astype(str)
 progress_text = placement_mart.get("progress_student", pd.Series("", index=placement_mart.index)).astype(str)
 placement_mart["canonical_outcome"] = np.select(
@@ -1327,13 +1217,11 @@ placement_mart["canonical_outcome"] = np.select(
     default="On Progress",
 )
 
-# One definitive placement record per student, taking the most recent update.
 placed_processes = placement_mart[placement_mart["canonical_outcome"] == "Placement"].copy()
 placed_processes = placed_processes.sort_values("last_update", na_position="first")
 placed_unique = placed_processes.drop_duplicates("NIM", keep="last")
 placed_nims = set(placed_unique["NIM"].astype(str))
 
-# Student readiness mart, one row per student.
 student_cols = [column for column in student_all.columns if column not in {"semester", "program_studi", "nama"}]
 readiness = status_student.merge(
     student_all[student_cols].drop_duplicates("NIM"),
@@ -1351,9 +1239,6 @@ readiness["basic_eligible"] = (
 readiness["tools_normalized"] = readiness.get("tools_list", readiness.get("tools", "")).apply(normalize_tools)
 
 
-# =============================================================================
-# CHART HELPERS
-# =============================================================================
 PLOTLY_CONFIG = {
     "displayModeBar": False,
     "responsive": True,
@@ -1523,9 +1408,6 @@ def insight_card(
     )
 
 
-# =============================================================================
-# HEADER
-# =============================================================================
 st.markdown(
     f"""
     <div class="hop-topbar">
@@ -1544,10 +1426,6 @@ st.markdown(
 st.caption(f"Tim: **{TEAM_NAME}** · Nomor peserta: **{PARTICIPANT_NUMBER}**")
 
 
-# =============================================================================
-# PAGE 1: RINGKASAN PENEMPATAN
-# Dibagi menjadi empat bagian agar setiap tampilan nyaman pada layar 1920 × 1080.
-# =============================================================================
 if current_page_key == "executive":
     executive_section = section_navigation(
         "executive",
@@ -2113,10 +1991,6 @@ if current_page_key == "executive":
             )
 
 
-# =============================================================================
-# PAGE 2: TEMUKAN KANDIDAT
-# Dibagi menjadi dua bagian: pengaturan dan hasil.
-# =============================================================================
 elif current_page_key == "matching":
     matching_section = section_navigation(
         "matching",
@@ -2461,7 +2335,6 @@ elif current_page_key == "matching":
                     selected_request
                 )
                 st.session_state["matching_request"] = selected_request.to_dict()
-            # UX: hasil langsung dibuka setelah pengguna menekan tombol pencarian.
             st.query_params["page"] = "matching"
             st.query_params["section"] = "results"
             st.rerun()
@@ -2574,10 +2447,6 @@ elif current_page_key == "matching":
                 )
 
 
-# =============================================================================
-# PAGE 3: PANTAU PROSES SELEKSI
-# Dibagi menjadi empat bagian agar tidak memerlukan scroll panjang.
-# =============================================================================
 else:
     operations_section = section_navigation(
         "operations",
@@ -3093,8 +2962,6 @@ else:
                 "Pantau": "#4299B8",
                 "Dalam batas waktu": "#27AE60",
             }
-            # Gunakan emoji percakapan agar tombol lebih ringan, konsisten,
-            # dan tidak bergantung pada file ikon eksternal.
             chat_icon_html = "<span class='ews-wa-emoji' aria-hidden='true'>💬</span>"
             table_columns = [
                 column
@@ -3278,9 +3145,6 @@ else:
                 use_container_width=True,
                 config=PLOTLY_CONFIG,
             )
-# =============================================================================
-# FOOTER
-# =============================================================================
 st.markdown(
     f"""
     <div class="hop-footer">
